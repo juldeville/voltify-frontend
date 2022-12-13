@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { useDispatch, } from 'react-redux';
 import {
+    View,
     Image,
     KeyboardAvoidingView,
     Platform,
@@ -17,35 +18,50 @@ export default function HomeScreen({ navigation }) {
     const [lastName, setLastName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('')
+    
+/*    
+    set password visibility eye
 
+    const [passwordVisibility, setPasswordVisibility] = useState(true)
+    const [rightIcon, setRightIcon] = useState('eye')
+
+    const handlePasswordVisibility = () => {
+        if (rightIcon === 'eye') {
+            setRightIcon('eye-off');
+            setPasswordVisibility(!passwordVisibility)
+        } else if (rightIcon === 'eye-off') {
+            setRightIcon('eye');
+            setPasswordVisibility(!passwordVisibility)
+        }
+    }
+ */
     const handleSignUp = () => {
-        fetch('voltify-backend-i698a8ghp-juldeville.vercel.app/users/signup', {
+        fetch('https://voltify-backend.vercel.app/users/signup', {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify({firstname: firstName, lastName: lastName, email: email, password: password, }),
-        }).then(response => response.json)
+            body: JSON.stringify({firstName: firstName, lastName: lastName, email: email, password: password, }),
+        }).then(response => response.json())
           .then(data => {
+            console.log('data', data)
             if (data.result) {
-                dispatch(signin({token: data.token, email: email}))
+                dispatch(signin({token: data.token, email: data.email}))
                 setFirstName('');
                 setLastName('');
                 setEmail('');
                 setPassword('')
-            }
+                navigation.navigate('ChoiceScreen')
+            } 
           })
     }
 
     return (
         <KeyboardAvoidingView style={styles.container} behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
-
             <Text style={styles.title}>Who are you?</Text>
-            <View>
-                <TextInput placeholder="First Name" onChangeText={(value) => setFirstName(value)} value = {firstName} styles={styles.input}/>
-                <TextInput placeholder="Last Name" onChangeText={(value) => setLastName(value)} value = {lastName} styles={styles.input}/>
-                <TextInput placeholder="Email" onChangeText={(value) => setEmail(value)} value = {email} styles={styles.input}/>
-                <TextInput placeholder="Password" onChangeText={(value) => setPassword(value)} value={password} styles={styles.input}/>
-            </View>
-            <TouchableOpacity onPress={() => navigation.navigate('choiceScreen')} style={styles.buttonTwo} activeOpacity={0.8}>
+                <TextInput placeholder="First Name" onChangeText={(value) => setFirstName(value)} value ={firstName} style={styles.input}/>
+                <TextInput placeholder="Last Name" onChangeText={(value) => setLastName(value)} value ={lastName} style={styles.input}/>
+                <TextInput placeholder="Email" onChangeText={(value) => setEmail(value)} value ={email} style={styles.input}/>
+                <TextInput placeholder="Password" onChangeText={(value) => setPassword(value)} value={password} style={styles.input} autoCorrect={false} autoCapitalize={'none'} secureTextEntry={true}/>
+            <TouchableOpacity onPress={() => handleSignUp()} style={styles.button} activeOpacity={0.8}>
                 <Text style={styles.textButton}>Next</Text>
             </TouchableOpacity>
         </KeyboardAvoidingView>
@@ -59,34 +75,24 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
     },
-
-    logo: {
-        width: '70%',
-        height: '7%',
-        marginBottom: 40,
-    },
-
     image: {
-        width: '80%',
-        height: '20%',
-        marginTop: 30,
-        marginBottom: 100,
+        width: '100%',
+        height: '50%',
     },
     title: {
         width: '80%',
         fontSize: 38,
         fontWeight: '600',
-        fontFamily: 'Roboto',
-        fontWeight: 'bold',
+        marginBottom: 50,
         textAlign: 'center',
-        marginTop: 30,
     },
     input: {
         width: '80%',
         marginTop: 25,
-        borderBottomColor: '#ec6e5b',
+        borderBottomColor: '#0FCCA7',
         borderBottomWidth: 1,
         fontSize: 18,
+        marginBottom: 50,
     },
     button: {
         alignItems: 'center',
@@ -95,23 +101,24 @@ const styles = StyleSheet.create({
         marginTop: 30,
         backgroundColor: '#0FCCA7',
         borderRadius: 10,
+        marginTop: 50,
         marginBottom: 0,
     },
 
-    buttonTwo: {
-        alignItems: 'center',
-        paddingTop: 8,
-        width: '80%',
-        marginTop: 20,
-        backgroundColor: '#020202',
-        borderRadius: 10,
-        marginBottom: 20,
-    },
+buttonTwo: {
+    alignItems: 'center',
+    paddingTop: 8,
+    width: '80%',
+    marginTop: 20,
+    backgroundColor: '#020202',
+    borderRadius: 10,
+    marginBottom: 20,
+},
 
-    textButton: {
-        color: '#ffffff',
-        height: 30,
-        fontWeight: '600',
-        fontSize: 16,
-    },
+textButton: {
+    color: '#ffffff',
+    height: 30,
+    fontWeight: '600',
+    fontSize: 16,
+},
 });
