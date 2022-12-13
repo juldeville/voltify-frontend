@@ -38,15 +38,14 @@ export default function HomeScreen({ navigation }) {
 
             <Text style={styles.title}>Who are you?</Text>
             <View>
-                <TextInput placeholder="First Name" onChangeText={(value) => setFirstName(value)} value = {firstName} />
-                <TextInput placeholder="Last Name" onChangeText={(value) => setLastName(value)} value = {lastName} />
-                <TextInput placeholder="Email" onChangeText={(value) => setEmail(value)} value = {email} />
-                <TextInput placeholder="Password" onChangeText={(value) => setPassword(value)} value={password}/>
+                <TextInput placeholder="First Name" onChangeText={(value) => setFirstName(value)} value = {firstName} styles={styles.input}/>
+                <TextInput placeholder="Last Name" onChangeText={(value) => setLastName(value)} value = {lastName} styles={styles.input}/>
+                <TextInput placeholder="Email" onChangeText={(value) => setEmail(value)} value = {email} styles={styles.input}/>
+                <TextInput placeholder="Password" onChangeText={(value) => setPassword(value)} value={password} styles={styles.input}/>
             </View>
             <TouchableOpacity onPress={() => navigation.navigate('SigninScreen')} style={styles.buttonTwo} activeOpacity={0.8}>
                 <Text style={styles.textButton}>Next</Text>
             </TouchableOpacity>
-
         </KeyboardAvoidingView>
     )
 }
