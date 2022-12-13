@@ -10,7 +10,7 @@ export const userSlice = createSlice({
     reducers: {
         signin: (state, action) => {
             state.value.token = action.payload.token;
-            state.value.username = action.payload.email;
+            state.value.email = action.payload.email;
         },
     },
 });
