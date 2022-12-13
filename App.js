@@ -5,13 +5,28 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import HomeScreen from './screens/HomeScreen';
 import SigninScreen from './screens/SigninScreen';
 
+// redux imports
 import { Provider } from 'react-redux';
-import { configureStore } from '@reduxjs/toolkit';
+import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import user from './reducers/user';
 
+// redux-persist imports
+import { persistStore, persistReducer } from 'redux-persist';
+import { PersistGate } from 'redux-persist/integration/react';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
+const reducers = combineReducers({ user });
+const persistConfig = {
+  key: 'voltify',
+  storage: AsyncStorage,
+};
+
 const store = configureStore({
-  reducer: { user },
+  reducer: persistReducer(persistConfig, reducers),
+  middleware: (getDefaultMiddleware) => getDefaultMiddleware({ serializableCheck: false }),
 });
+
+const persistor = persistStore(store);
 
 const Stack = createNativeStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -34,8 +49,7 @@ const TabNavigator = () => {
       tabBarInactiveTintColor: '#335561',
       headerShown: false,
     })}>
-      <Tab.Screen name="Map" component={MapScreen} />
-      <Tab.Screen name="Places" component={PlacesScreen} />
+      <Tab.Screen name="Search" component={MapScreen} />
     </Tab.Navigator>
   );
 };
@@ -43,13 +57,15 @@ const TabNavigator = () => {
 export default function App() {
   return (
     <Provider store={store}>
-      <NavigationContainer>
-        <Stack.Navigator screenOptions={{ headerShown: false }}>
-          <Stack.Screen name="Home" component={HomeScreen} />
-          <Stack.Screen name="SigninScreen" component={SigninScreen} />
-          <Stack.Screen name="TabNavigator" component={TabNavigator} />
-        </Stack.Navigator>
-      </NavigationContainer>
+      <PersistGate persistor={persistor}>
+        <NavigationContainer>
+          <Stack.Navigator screenOptions={{ headerShown: false }}>
+            <Stack.Screen name="Home" component={HomeScreen} />
+            <Stack.Screen name="SigninScreen" component={SigninScreen} />
+            <Stack.Screen name="TabNavigator" component={TabNavigator} />
+          </Stack.Navigator>
+        </NavigationContainer>
+      </PersistGate>
     </Provider>
   );
 }

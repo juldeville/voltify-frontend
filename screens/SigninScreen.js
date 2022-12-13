@@ -1,20 +1,39 @@
-import { useState } from 'react';
-import {
-    Image,
-    KeyboardAvoidingView,
-    Platform,
-    StyleSheet,
-    Text,
-    TouchableOpacity,
-} from 'react-native';
+import { useEffect, useState } from 'react';
+import { Modal, StyleSheet, Text, TextInput, TouchableOpacity, View, KeyboardAvoidingView } from 'react-native';
+import { useDispatch, useSelector } from 'react-redux';
 
-export default function HomeScreen({ navigation }) {
+export default function SigninScreen({ navigation }) {
+    const dispatch = useDispatch();
+    const user = useSelector((state) => state.user.value);
+
+    const [signInEmail, setSignInEmail] = useState('');
+    const [signInPassword, setSignInPassword] = useState('');
+
+    const handleConnection = () => {
+        fetch('voltify-backend-i698a8ghp-juldeville.vercel.app/users/signin', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email: signInEmail, password: signInPassword }),
+        }).then(response => response.json())
+            .then(data => {
+                if (data.result) {
+                    dispatch(signin({ email: data.email, token: data.token }));
+                    setSignInUsername('');
+                    setSignInPassword('');
+                }
+            });
+    };
+
+
+
 
 
     return (
         <KeyboardAvoidingView style={styles.container} behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
 
-            <Text style={styles.title}>Voltify</Text>
+            <Text style={styles.title}>Sign in</Text>
+
+            <TextInput placeholder="Email" onChangeText={(value) => { console.log(value); setSignInEmail(value) }} value={signInEmail} style={styles.input} />
 
             <TouchableOpacity onPress={() => navigation.navigate('Profile')} style={styles.button} activeOpacity={0.8}>
 
