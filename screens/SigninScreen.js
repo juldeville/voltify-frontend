@@ -20,6 +20,8 @@ export default function SigninScreen({ navigation }) {
                     dispatch(signin({ email: data.email, token: data.token }));
                     setSignInUsername('');
                     setSignInPassword('');
+                    console.log(email);
+                    console.log(token);
                 }
             });
     };
@@ -28,16 +30,18 @@ export default function SigninScreen({ navigation }) {
 
 
 
+
     return (
         <KeyboardAvoidingView style={styles.container} behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
 
-            <Text style={styles.title}>Sign in</Text>
+            <Text style={styles.title}>Sign in to your accout</Text>
 
             <TextInput placeholder="Email" onChangeText={(value) => { console.log(value); setSignInEmail(value) }} value={signInEmail} style={styles.input} />
+            <TextInput placeholder="Password" onChangeText={(value) => { console.log(value); setSignInPassword(value) }} value={signInPassword} style={styles.input} />
 
-            <TouchableOpacity onPress={() => navigation.navigate('Profile')} style={styles.button} activeOpacity={0.8}>
+            <TouchableOpacity onPress={() => handleConnection()} style={styles.button} activeOpacity={0.8}>
 
-                <Text style={styles.textButton}>Go to map</Text>
+                <Text style={styles.textButton}>Sign in</Text>
 
             </TouchableOpacity>
         </KeyboardAvoidingView>

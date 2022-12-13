@@ -20,16 +20,16 @@ export default function HomeScreen({ navigation }) {
 
             <Image style={styles.image} source={require('../assets/home-background.png')} />
 
-            <TouchableOpacity onPress={() => navigation.navigate('SignupScreen')} style={styles.button} activeOpacity={0.8}>
+            <TouchableOpacity onPress={() => navigation.navigate('SigninScreen')} style={styles.button} activeOpacity={0.8}>
                 <Text style={styles.textButton}>Sign up</Text>
             </TouchableOpacity>
 
-            <TouchableOpacity onPress={() => navigation.navigate('SigninScreen')} style={styles.buttonTwo} activeOpacity={0.8}>
+            <TouchableOpacity onPress={() => navigation.navigate('SignupScreen')} style={styles.buttonTwo} activeOpacity={0.8}>
                 <Text style={styles.textButton}>Sign in</Text>
             </TouchableOpacity>
 
             <TouchableOpacity onPress={() => navigation.navigate('ChoiceScreen')} style={styles.buttonTwo} activeOpacity={0.8}>
-                <Text style={styles.textButton}>Choice</Text>
+                <Text style={styles.textButton}>Sign in</Text>
             </TouchableOpacity>
 
         </KeyboardAvoidingView>
