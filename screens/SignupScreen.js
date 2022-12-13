@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useDispatch, } from 'react-redux';
 import {
     Image,
     KeyboardAvoidingView,
@@ -8,23 +9,24 @@ import {
     TouchableOpacity,
     TextInput,
 } from 'react-native';
-
+import { signin } from '../reducers/user'
 export default function HomeScreen({ navigation }) {
-    
+    const dispatch = useDispatch()    
 
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
-    const [email, setEmail] = useState('')
+    const [email, setEmail] = useState('');
     const [password, setPassword] = useState('')
 
     const handleSignUp = () => {
-        fetch('voltify-backend-i698a8ghp-juldeville.vercel.app', {
+        fetch('voltify-backend-i698a8ghp-juldeville.vercel.app/users/signup', {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify({firstname: firstName, lastName: lastName, email: email, password: password, }),
         }).then(response => response.json)
           .then(data => {
             if (data.result) {
+                dispatch(signin({token: data.token, email: email}))
                 setFirstName('');
                 setLastName('');
                 setEmail('');
@@ -43,7 +45,7 @@ export default function HomeScreen({ navigation }) {
                 <TextInput placeholder="Email" onChangeText={(value) => setEmail(value)} value = {email} styles={styles.input}/>
                 <TextInput placeholder="Password" onChangeText={(value) => setPassword(value)} value={password} styles={styles.input}/>
             </View>
-            <TouchableOpacity onPress={() => navigation.navigate('SigninScreen')} style={styles.buttonTwo} activeOpacity={0.8}>
+            <TouchableOpacity onPress={() => navigation.navigate('choiceScreen')} style={styles.buttonTwo} activeOpacity={0.8}>
                 <Text style={styles.textButton}>Next</Text>
             </TouchableOpacity>
         </KeyboardAvoidingView>
