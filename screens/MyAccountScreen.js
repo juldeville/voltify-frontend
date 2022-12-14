@@ -1,7 +1,9 @@
 import { useState } from 'react';
-import { StyleSheet, Text, TextInput, TouchableOpacity, View, KeyboardAvoidingView } from 'react-native';
+import { StyleSheet, Text, TextInput, TouchableOpacity, View, KeyboardAvoidingView, Image } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { signin } from "../reducers/user";
+import * as React from 'react';
+
 
 export default function SigninScreen({ navigation }) {
     const dispatch = useDispatch();
@@ -38,28 +40,20 @@ export default function SigninScreen({ navigation }) {
     return (
         <KeyboardAvoidingView style={styles.container} behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
 
-            <Text style={styles.title}>Sign in to your Voltify accout</Text>
+            <Text style={styles.title}>PROFILE</Text>
 
-            <TextInput
-                placeholder="Email"
-                autoCapitalize="none"
-                keyboardType="email-address"
-                textContentType="emailAddress"
-                onChangeText={(value) => { console.log(value); setSignInEmail(value) }} value={signInEmail} style={styles.input} />
+            <Image style={styles.avatar} size={24} source={require('../assets/photo.jpg')} />
 
-            <TextInput
-                placeholder="Password"
-                autoCapitalize="none"
-                secureTextEntry={true}
+            <Text style={styles.name}>FirstName LastName</Text>
+            <Text style={styles.total}>Amount earned: 139.81€</Text>
 
-                onChangeText={(value) => { console.log(value); setSignInPassword(value) }} value={signInPassword} style={styles.input} />
 
             <TouchableOpacity onPress={() => handleConnection()} style={styles.button} activeOpacity={0.8}>
-                <Text style={styles.textButton}>Sign in</Text>
+                <Text style={styles.textButton}>Modify</Text>
             </TouchableOpacity>
 
             <TouchableOpacity onPress={() => navigation.navigate('HomeScreen')} style={styles.buttonTwo} activeOpacity={0.8}>
-                <Text style={styles.textButton}>Back</Text>
+                <Text style={styles.textButton}>DeleteAccount</Text>
             </TouchableOpacity>
 
         </KeyboardAvoidingView>
@@ -73,17 +67,47 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
     },
-    image: {
-        width: '100%',
-        height: '50%',
-    },
+   
     title: {
         width: '80%',
         fontSize: 38,
         fontWeight: '600',
-        marginBottom: 50,
+        marginTop:-20,
         textAlign: 'center',
+       
+
     },
+
+    avatar:{
+       
+        //   marginBottom:50,
+            width: 120,
+            height: 120,
+            marginTop:30,
+           
+           
+    },
+
+    name:{
+        // width: '20%',
+        fontSize: 25,
+        // fontWeight: '600',
+        // paddingBottom:150,
+         textAlign: 'center',
+         marginBottom:20,
+        
+       
+    },
+    
+    total:{
+        // width: '20%',
+        fontSize: 25,
+        // fontWeight: '600',
+        // paddingBottom:150,
+        textAlign: 'center',
+        
+    },
+
     input: {
         width: '80%',
         marginTop: 25,
@@ -97,10 +121,10 @@ const styles = StyleSheet.create({
         paddingTop: 8,
         width: '80%',
         marginTop: 30,
-        backgroundColor: '#0FCCA7',
+        backgroundColor: '#EEA61B',
         borderRadius: 10,
-        marginTop: 50,
-        marginBottom: 0,
+        marginTop: 120,
+        
     },
 
     buttonTwo: {
@@ -108,9 +132,10 @@ const styles = StyleSheet.create({
         paddingTop: 8,
         width: '80%',
         marginTop: 20,
-        backgroundColor: '#020202',
+        backgroundColor: '#EE1B42',
         borderRadius: 10,
-        marginBottom: 20,
+        marginBottom: 28,
+        
     },
 
     textButton: {
@@ -119,4 +144,5 @@ const styles = StyleSheet.create({
         fontWeight: '600',
         fontSize: 16,
     },
-});
+
+ });
