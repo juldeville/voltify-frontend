@@ -59,7 +59,7 @@ export default function HomeScreen({ navigation }) {
             <Text style={styles.title}>Who are you?</Text>
                 <TextInput placeholder="First Name" onChangeText={(value) => setFirstName(value)} value ={firstName} style={styles.input}/>
                 <TextInput placeholder="Last Name" onChangeText={(value) => setLastName(value)} value ={lastName} style={styles.input}/>
-                <TextInput placeholder="Email" onChangeText={(value) => setEmail(value)} value ={email} style={styles.input}/>
+                <TextInput placeholder="Email" onChangeText={(value) => setEmail(value)} value ={email} style={styles.input} keyboardType="email-address" autoCapitalize='none' textContentType='emailaddress'/>
                 <TextInput placeholder="Password" onChangeText={(value) => setPassword(value)} value={password} style={styles.input} autoCorrect={false} autoCapitalize={'none'} secureTextEntry={true}/>
             <TouchableOpacity onPress={() => handleSignUp()} style={styles.button} activeOpacity={0.8}>
                 <Text style={styles.textButton}>Next</Text>
