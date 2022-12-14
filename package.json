@@ -10,8 +10,6 @@
     "capsule": "expo start --tunnel"
   },
   "dependencies": {
-    "@react-native-async-storage/async-storage": "^1.17.7",
-    "@react-native-community/picker": "^1.8.1",
     "@react-navigation/bottom-tabs": "6",
     "@react-navigation/native": "6",
     "@react-navigation/native-stack": "^6.9.5",
@@ -23,6 +21,8 @@
     "react-native-dropdown-select-list": "^2.0.4",
     "react-native-safe-area-context": "4.4.1",
     "react-native-screens": "~3.18.0",
+    "react-native-svg": "^13.6.0",
+    "react-native-vector-icons": "^9.2.0",
     "react-redux": "^8.0.5",
     "redux-persist": "^6.0.0"
   },

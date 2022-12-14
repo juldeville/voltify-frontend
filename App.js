@@ -11,6 +11,9 @@ import ChoiceScreen from './screens/ChoiceScreen';
 import MyAccountScreen from './screens/MyAccountScreen';
 import UpdateAccountScreen from './screens/UpdateAccountScreen';
 import AddOutletScreen from './screens/AddOutletScreen';
+// import BookedOutletsScreen from './screens/BookedOutletsScreen';
+// import RecentTransactionsScreen from './screens/RecentTransactionsScreen';
+// import MyOutletScreen from './screens/MyOutletScreen';
 
 
 // redux imports
@@ -44,20 +47,31 @@ const TabNavigator = () => {
     <Tab.Navigator screenOptions={({ route }) => ({
       tabBarIcon: ({ color, size }) => {
         let iconName = '';
+       
+         if (route.name === 'Search') {
+            iconName = 'search'
+          } else if(route.name === "BookedOutlets" ){
+            iconName = 'calendar'
+          } else if( route.name === "RecentTransactions" ){
+            iconName = 'bars'
+          } else if( route.name === "MyOutlet" ){
+            iconName = 'plug'
+          } else if(route.name === "MyAccount" ){
+            iconName = 'user'
+          }
 
-        if (route.name === 'Map') {
-          iconName = 'location-arrow';
-        } else if (route.name === 'Places') {
-          iconName = 'map-pin';
-        }
-
-        return <FontAwesome name={iconName} size={size} color={color} />;
+         return  <FontAwesome name={iconName} size={size} color={color} />;
       },
-      tabBarActiveTintColor: '#ec6e5b',
-      tabBarInactiveTintColor: '#335561',
+      // tabBarActiveTintColor: '#ec6e5b',
+      // tabBarInactiveTintColor: '#335561',
       headerShown: false,
     })}>
-      <Tab.Screen name="Search" component={MapScreen} />
+      <Tab.Screen  name="Search" component={MyAccountScreen} />
+      <Tab.Screen name="BookedOutlets" component={MyAccountScreen} />
+      <Tab.Screen name="RecentTransactions" component={MyAccountScreen} />
+      <Tab.Screen name="MyOutlet" component={MyAccountScreen} />
+      <Tab.Screen name="MyAccount" component={MyAccountScreen} />
+     
     </Tab.Navigator>
   );
 };
@@ -69,7 +83,7 @@ export default function App() {
         <NavigationContainer>
           <Stack.Navigator screenOptions={{ headerShown: false }}>
             <Stack.Screen name="DevScreen" component={DevScreen} />
-            <Stack.Screen name="MyAccountScreen" component={MyAccountScreen} />
+            <Stack.Screen name="MyAccountScreen" component={TabNavigator} />
             <Stack.Screen name="AddOutletScreen" component={AddOutletScreen} />
             <Stack.Screen name="UpdateAccountScreen" component={UpdateAccountScreen} />
             <Stack.Screen name="HomeScreen" component={HomeScreen} />
