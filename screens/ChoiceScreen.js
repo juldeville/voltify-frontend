@@ -1,101 +1,88 @@
-import { useState } from 'react';
-import {
-    Image,
-    KeyboardAvoidingView,
-    Platform,
-    StyleSheet,
-    Text,
-    TouchableOpacity,
-} from 'react-native';
-
-export default function HomeScreen({ navigation }) {
+import { StatusBar } from 'expo-status-bar';
+import { StyleSheet, Text, View, Button, TouchableOpacity } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 
-    return (
-        <KeyboardAvoidingView style={styles.container} behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
+const Stack = createNativeStackNavigator();
 
-            <Text style={styles.title}>Welcome to</Text>
+export default function ChoiceScreen({ navigation }) {
 
-            <Image style={styles.logo} source={require('../assets/voltify-logo.png')} />
 
-            <Image style={styles.image} source={require('../assets/home-background.png')} />
+  return (
 
-            <TouchableOpacity onPress={() => navigation.navigate('SigninScreen')} style={styles.button} activeOpacity={0.8}>
-                <Text style={styles.textButton}>Sign up</Text>
-            </TouchableOpacity>
+    <View style={styles.container}>
 
-            <TouchableOpacity onPress={() => navigation.navigate('SignupScreen')} style={styles.buttonTwo} activeOpacity={0.8}>
-                <Text style={styles.textButton}>Sign in</Text>
-            </TouchableOpacity>
+      <Text style={styles.title}>What would you like to do?</Text>
 
-            <TouchableOpacity onPress={() => navigation.navigate('ChoiceScreen')} style={styles.buttonTwo} activeOpacity={0.8}>
-                <Text style={styles.textButton}>Sign in</Text>
-            </TouchableOpacity>
+      <Button style={styles.button}
+        title="Locate charging points to charge up my car"
+        onPress={() => navigation.navigate('HomeScreen')}
+      />
 
-        </KeyboardAvoidingView>
-    )
+      <TouchableOpacity onPress={() => navigation.navigate('SigninScreen')} style={styles.buttonTwo} activeOpacity={0.8}>
+        <Text style={styles.textButton}>Sign in</Text>
+      </TouchableOpacity>
+
+      <Button style={styles.button}
+        title="Offer charging station and generate income"
+        onPress={() => navigation.navigate('HomeScreen')}
+      />
+
+
+      <Button style={styles.button}
+        title="Do both"
+        onPress={() => navigation.navigate('HomeScreen')}
+      />
+
+    </View>
+
+  );
 }
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: '#ffffff',
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
+  container: {
+    flex: 1,
+    backgroundColor: '#ffffff',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
 
-    logo: {
-        width: '70%',
-        height: '7%',
-        marginBottom: 40,
-    },
 
-    image: {
-        width: '80%',
-        height: '20%',
-        marginTop: 30,
-        marginBottom: 100,
-    },
-    title: {
-        width: '80%',
-        fontSize: 38,
-        fontWeight: '600',
-        fontFamily: 'Roboto',
-        fontWeight: 'bold',
-        textAlign: 'center',
-        marginTop: 30,
-    },
-    input: {
-        width: '80%',
-        marginTop: 25,
-        borderBottomColor: '#ec6e5b',
-        borderBottomWidth: 1,
-        fontSize: 18,
-    },
-    button: {
-        alignItems: 'center',
-        paddingTop: 8,
-        width: '80%',
-        marginTop: 30,
-        backgroundColor: '#0FCCA7',
-        borderRadius: 10,
-        marginBottom: 0,
-    },
+  title: {
+    width: '80%',
+    fontSize: 38,
+    fontWeight: '600',
+    fontFamily: 'Roboto',
+    fontWeight: 'bold',
+    textAlign: 'center',
+    marginTop: 30,
+  },
 
-    buttonTwo: {
-        alignItems: 'center',
-        paddingTop: 8,
-        width: '80%',
-        marginTop: 20,
-        backgroundColor: '#020202',
-        borderRadius: 10,
-        marginBottom: 20,
-    },
+  button: {
+    alignItems: 'center',
+    paddingTop: 8,
+    width: '80%',
+    marginTop: 30,
+    backgroundColor: '#0FCCA7',
+    borderRadius: 10,
+    marginBottom: 0,
+  },
 
-    textButton: {
-        color: '#ffffff',
-        height: 30,
-        fontWeight: '600',
-        fontSize: 16,
-    },
+  buttonTwo: {
+    alignItems: 'center',
+    paddingTop: 8,
+    width: '80%',
+    marginTop: 20,
+    backgroundColor: '#020202',
+    borderRadius: 10,
+    marginBottom: 20,
+  },
+
+  textButton: {
+    color: '#ffffff',
+    height: 30,
+    fontWeight: '600',
+    fontSize: 16,
+  },
 });

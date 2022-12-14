@@ -2,10 +2,16 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
+
+import DevScreen from './screens/DevScreen';
 import HomeScreen from './screens/HomeScreen';
 import SigninScreen from './screens/SigninScreen';
 import SignupScreen from './screens/SignupScreen';
 import ChoiceScreen from './screens/ChoiceScreen';
+import MyAccountScreen from './screens/MyAccountScreen';
+import UpdateAccountScreen from './screens/UpdateAccountScreen';
+import AddOutletScreen from './screens/AddOutletScreen';
+
 
 // redux imports
 import { Provider } from 'react-redux';
@@ -62,6 +68,10 @@ export default function App() {
       <PersistGate persistor={persistor}>
         <NavigationContainer>
           <Stack.Navigator screenOptions={{ headerShown: false }}>
+            <Stack.Screen name="DevScreen" component={DevScreen} />
+            <Stack.Screen name="MyAccountScreen" component={MyAccountScreen} />
+            <Stack.Screen name="AddOutletScreen" component={AddOutletScreen} />
+            <Stack.Screen name="UpdateAccountScreen" component={UpdateAccountScreen} />
             <Stack.Screen name="HomeScreen" component={HomeScreen} />
             <Stack.Screen name="SigninScreen" component={SigninScreen} />
             <Stack.Screen name="SignupScreen" component={SignupScreen} />
