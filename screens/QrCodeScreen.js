@@ -40,7 +40,7 @@ export default function QrCodeScreen() {
         </TouchableOpacity>
       </View>
       <View style={styles.snapContainer}>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={() => cameraRef && takePicture()}>
           <FontAwesome name='circle-thin' size={95} color='#ffffff' />
         </TouchableOpacity>
       </View>
