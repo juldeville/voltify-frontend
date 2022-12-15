@@ -34,11 +34,15 @@ export default function MyAccountScreen({ navigation }) {
       }, []);
 
         const handleDelete = () => {
-        navigation.navigate('HomeScreen');
-        const deleteUser = fetch(`https://voltify-backend.vercel.app/users/deleteUser/${user.token}`)
+        fetch(`https://voltify-backend.vercel.app/users/deleteUser`,{
+            method: 'DELETE',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ token: user.token }),
+        })
+
         .then(response => response.json())
         .then(data =>{
-            console.log('mmmmmmmmmmmmmmmmmmmmmmmm',data)  
+            navigation.navigate('HomeScreen'); 
           });
         }
 
