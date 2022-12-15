@@ -32,6 +32,7 @@ export default function SigninScreen({ navigation }) {
                 if (data.result) {
                     dispatch(updateEmail({ email: data.email}));
                     console.log('Great success!');
+                    navigation.navigate('HomeScreen')
                 } else {
                     console.log('You fail!')
                 }
@@ -57,21 +58,21 @@ export default function SigninScreen({ navigation }) {
     return (
     <KeyboardAvoidingView style={styles.container} behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
     <Text style={styles.title}>Account</Text>
-      <Modal visible={modalVisible} animationType="fade" transparent>
-            <KeyboardAvoidingView style={styles.container1} behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
-            <View style={styles.centeredView}>
-                <View style={styles.modalView}>
-                    <TextInput placeholder='Current Password' onChangeText={(value) => { console.log(value); setTrialPassword(value)}} value={trialPassword} secureTextEntry={true} placeholderTextColor={"#696969"} borderBottomWidth= '1' style={{width: "80%", margin: 20}}/>
-                    <TextInput placeholder='New Password' onChangeText={(value) => { console.log(value); setNewPassword(value)}}  value={newPassword} secureTextEntry={true}  placeholderTextColor={"#696969"} borderBottomWidth= '1' style={{width: "80%", margin: 20}}/>
-                    <TouchableOpacity onPress={() => handleNewPassword} style={styles.buttonModal} activeOpacity={0.8}>
-                        <Text style={styles.textButton}>Submit</Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity onPress={() => handleCloseModal()} style={styles.buttonModalCancel} activeOpacity={0.8}>
-                        <Text style={styles.textButton}>Cancel</Text>
-                    </TouchableOpacity>
-                </View>
-            </View>
-            </KeyboardAvoidingView>
+    <Modal visible={modalVisible} animationType="fade" transparent stume>
+    <KeyboardAvoidingView style={styles.container1} behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
+        <View style={styles.centeredView}>
+          <View style={styles.modalView}>
+            <TextInput placeholder="Current Password" onChangeText={(value) => {console.log(value);setTrialPassword(value)}} value={trialPassword} style={styles.input} secureTextEntry={true} placeholderTextColor={'#696969'} />
+            <TextInput placeholder="New Password" onChangeText={(value) => {console.log(value);setNewPassword(value)}} value={newPassword} style={styles.input} secureTextEntry={true} placeholderTextColor={'#696969'} />
+            <TouchableOpacity  onPress={() => handleNewPassword()}  style={styles.buttonModal} activeOpacity={0.8}>
+              <Text style={styles.textButton}>Add</Text>
+            </TouchableOpacity>
+            <TouchableOpacity onPress={() => handleCloseModal()}  style={styles.buttonModalCancel} activeOpacity={0.8}>
+              <Text style={styles.textButton}>Close</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+        </KeyboardAvoidingView>
       </Modal>
             <View style={{width:"100%", flexDirection: 'row', justifyContent: 'center', alignItems: 'center', position: 'relative'}}>
                 <TextInput
@@ -91,7 +92,9 @@ export default function SigninScreen({ navigation }) {
             <TextInput
                 placeholder="IBAN"
                 onChangeText={(value) => { console.log(value); setIban(value) }} value={iban}  style={styles.input} />
-
+            <TouchableOpacity onPress={() => handleUpdate()} style={styles.button} activeOpacity={0.8}>
+                <Text style={styles.textButton}>Submit</Text>
+            </TouchableOpacity>
             <TouchableOpacity onPress={() => navigation.navigate('HomeScreen')} style={styles.buttonTwo} activeOpacity={0.8}>
                 <Text style={styles.textButton}>Back</Text>
             </TouchableOpacity>
@@ -121,6 +124,7 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
+        
       },
 
       modalView: {
@@ -193,7 +197,7 @@ const styles = StyleSheet.create({
         marginTop: 30,
         backgroundColor: '#0FCCA7',
         borderRadius: 10,
-        marginTop: 30,
+        marginTop: 0,
         marginBottom: 0,
     },
     buttonModalCancel: {
@@ -203,7 +207,7 @@ const styles = StyleSheet.create({
         marginTop: 30,
         backgroundColor: '#020202',
         borderRadius: 10,
-        marginTop: 30,
+        marginTop: 20,
         marginBottom: 0,
     },
 
