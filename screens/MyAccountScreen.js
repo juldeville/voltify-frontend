@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { StyleSheet, Text, TextInput, TouchableOpacity, View, KeyboardAvoidingView, Image } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { signin } from "../reducers/user";
@@ -14,37 +14,36 @@ export default function MyAccountScreen({ navigation }) {
 
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
+    
 
-    const handleFirstName = () => {
-        
-    }
-    const handleLasttName = () => {
-        
-    }
+    /*const handleName = () => {
+        fetch('https://voltify-backend.vercel.app/users',)
+        .then(response => response.json())
+        .then(data => {
+        setName(data.FirstName);
+        })
+    }*/
 
-    const handleConnection = () => {
-        fetch('https://voltify-backend.vercel.app/users/signin', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ email: signInEmail, password: signInPassword }),
-        }).then(response => response.json())
-            .then(data => {
-                if (data.result) {
-                    dispatch(signin({ email: data.email, token: data.token }));
-                    setSignInEmail('');
-                    setSignInPassword('');
-                    console.log('Great succes!');
-                    navigation.navigate('HomeScreen')
+      useEffect(() => {
+        fetch(`https://voltify-backend.vercel.app/users/viewUser/${user.token}`)
+          .then(response => response.json())
+          .then(data => {
+            setLastName(data.profile.lastName);
+            setFirstName(data.profile.firstName);
+          });
+      }, []);
 
-                } else {
-                    console.log('You fail!')
-                }
-            });
-    };
+        const handleDelete = () => {
+        navigation.navigate('HomeScreen');
+        const deleteUser = fetch(`https://voltify-backend.vercel.app/users/deleteUser/${user.token}`)
+        .then(response => response.json())
+        .then(data =>{
+            console.log('mmmmmmmmmmmmmmmmmmmmmmmm',data)  
+          });
+        }
 
-
-
-
+       
+   
 
 
     return (
@@ -54,15 +53,15 @@ export default function MyAccountScreen({ navigation }) {
 
             <Image style={styles.avatar} size={24} source={require('../assets/photo.jpg')} />
 
-            <Text style={styles.name}>FirstName LastName</Text>
+            <Text style={styles.name}>{firstName} {lastName}</Text>
             <Text style={styles.total}>Amount earned: 139.81€</Text>
 
 
-            <TouchableOpacity onPress={() => handleConnection()} style={styles.button} activeOpacity={0.8}>
+            <TouchableOpacity onPress={() =>  navigation.navigate('UpdateAccountScreen')} style={styles.button} activeOpacity={0.8}>
                 <Text style={styles.textButton}>Modify</Text>
             </TouchableOpacity>
 
-            <TouchableOpacity onPress={() => navigation.navigate('HomeScreen')} style={styles.buttonTwo} activeOpacity={0.8}>
+            <TouchableOpacity onPress={() => handleDelete()}  style={styles.buttonTwo} activeOpacity={0.8}>
                 <Text style={styles.textButton}>DeleteAccount</Text>
             </TouchableOpacity>
 
