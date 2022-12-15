@@ -95,6 +95,7 @@ export default function AddOutletScreen({ navigation }) {
                         token: user.token,
                         longitude: updatedOutletLongitude,
                         latitude: updatedOutletLatitude,
+                        address: outletAddress,
                         type: outletType,
                         price: outletPrice,
                         availability: true,
@@ -138,7 +139,7 @@ export default function AddOutletScreen({ navigation }) {
 
                 <SelectList
                     placeholder="Select your outlet type"
-                    setSelected={(val) => setOutletType(val)}
+                    setSelected={(val) => { setOutletType(val); console.log(val) }}
                     data={data}
                     save="value"
                     style={styles.input}
