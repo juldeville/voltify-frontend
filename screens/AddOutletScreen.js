@@ -1,13 +1,57 @@
 import { useEffect, useState } from 'react';
-import { StyleSheet, Text, TextInput, TouchableOpacity, View, KeyboardAvoidingView, ScrollView } from 'react-native';
+import { StyleSheet, Text, TextInput, TouchableOpacity, View, KeyboardAvoidingView, ScrollView, Button, showDatepicker, showTimepicker, date } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { signin } from "../reducers/user";
-import { SelectList } from 'react-native-dropdown-select-list'
+import { SelectList } from 'react-native-dropdown-select-list';
+import DateTimePicker from '@react-native-community/datetimepicker';
+import WeekdayPicker from "react-native-weekday-picker";
+
+
 
 
 export default function AddOutletScreen({ navigation }) {
+
+    //Start of WeekDayPicker
     const dispatch = useDispatch();
     const user = useSelector((state) => state.user.value);
+
+    const [date, setDate] = useState(new Date());
+    const [mode, setMode] = useState('date');
+    const [show, setShow] = useState(false);
+
+    let days = { 1: 1, 2: 1, 3: 1, 4: 1, 5: 1, 6: 0, 0: 0 }
+
+    const handleChange = (days) => { }
+
+    //Start of DateTimePicker
+
+    const onChange = (event, selectedDate) => {
+        const currentDate = selectedDate;
+        setShow(false);
+        setDate(currentDate);
+        console.log('onChange', currentDate);
+    };
+
+
+    const showMode = (currentMode) => {
+        if (Platform.OS === 'android') {
+            setShow(true);
+            // for iOS, add a button that closes the picker
+        }
+        setMode(currentMode);
+        console.log('setMode', currentMode);
+    };
+
+    const showDatepicker = () => {
+        showMode('date');
+    };
+
+    const showTimepicker = () => {
+        showMode('time');
+    };
+
+    //End of DateTimePicker
+
 
     const data = [
         { key: '1', value: 'Combo CCS' },
@@ -41,7 +85,6 @@ export default function AddOutletScreen({ navigation }) {
                 console.log('Test Outlet', outletType);
 
 
-
                 fetch('https://voltify-backend.vercel.app/outlets/addOutlet', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
@@ -66,27 +109,27 @@ export default function AddOutletScreen({ navigation }) {
                     });
 
             })
-
-
-
-
-
-
-
-
     };
-
-
-
 
 
     return (
 
         <KeyboardAvoidingView style={styles.container} behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
 
+
+
             <Text style={styles.title}>Add your outlet</Text>
 
+            <WeekdayPicker
+                days={days}
+                onChange={handleChange}
+                style={styles.picker}
+                dayStyle={styles.day}
+            />
+
             <ScrollView style={styles.scrollView}>
+
+
 
                 <SelectList
                     placeholder="Select your outlet type"
@@ -114,6 +157,33 @@ export default function AddOutletScreen({ navigation }) {
                     autoCapitalize="none"
                     onChangeText={(value) => { console.log(value); setOutletAddress(value) }} value={outletAddress} style={styles.input} />
 
+                <View>
+
+                    <Text style={styles.subTitle}>Select your outlet's availibilities</Text>
+
+                    <TouchableOpacity onPress={showDatepicker} style={styles.dateBtn} activeOpacity={0.8} >
+                        <Text style={styles.textBtn}>Select a day</Text>
+                    </TouchableOpacity>
+
+
+
+                    <TouchableOpacity onPress={showTimepicker} style={styles.timeBtn} activeOpacity={0.8} >
+                        <Text style={styles.textBtn}>Select a timeframe</Text>
+                    </TouchableOpacity>
+
+
+
+                    <Text style={styles.subTitle} >Selected: {date.toLocaleString()}</Text>
+                    {show && (
+                        <DateTimePicker
+                            testID="dateTimePicker"
+                            value={date}
+                            mode={mode}
+                            is24Hour={true}
+                            onChange={onChange}
+                        />
+                    )}
+                </View>
 
 
                 <TouchableOpacity onPress={() => handleAddOutlet()} style={styles.button} activeOpacity={0.8}>
@@ -142,11 +212,11 @@ const styles = StyleSheet.create({
 
     },
 
-
     image: {
         width: '100%',
         height: '50%',
     },
+
     title: {
         width: '80%',
         fontSize: 38,
@@ -155,6 +225,12 @@ const styles = StyleSheet.create({
         marginTop: 100,
         textAlign: 'center',
     },
+
+    subTitle: {
+        textAlign: 'center',
+    },
+
+
     input: {
         width: '100%',
         marginTop: 25,
@@ -163,6 +239,7 @@ const styles = StyleSheet.create({
         fontSize: 18,
         marginBottom: 25,
     },
+
     button: {
         alignItems: 'center',
         paddingTop: 8,
@@ -190,4 +267,35 @@ const styles = StyleSheet.create({
         fontWeight: '600',
         fontSize: 16,
     },
+
+    dateBtn: {
+        alignItems: 'center',
+        paddingTop: 8,
+        width: '100%',
+        marginTop: 20,
+        borderWidth: 3,
+        borderColor: '#020202',
+        borderRadius: 10,
+        marginBottom: 0,
+    },
+
+    timeBtn: {
+        alignItems: 'center',
+        paddingTop: 8,
+        width: '100%',
+        marginTop: 20,
+        borderWidth: 3,
+        borderColor: '#020202',
+        borderRadius: 10,
+        marginBottom: 20,
+    },
+
+
+    textBtn: {
+        color: '#020202',
+        height: 30,
+        fontWeight: '600',
+        fontSize: 16,
+    },
+
 });
