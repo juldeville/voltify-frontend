@@ -10,6 +10,7 @@
     "capsule": "expo start --tunnel"
   },
   "dependencies": {
+    "@react-native-async-storage/async-storage": "^1.17.11",
     "@react-navigation/bottom-tabs": "6",
     "@react-navigation/native": "6",
     "@react-navigation/native-stack": "^6.9.5",
