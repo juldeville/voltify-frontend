@@ -10,7 +10,7 @@ import SignupScreen from './screens/SignupScreen';
 import ChoiceScreen from './screens/ChoiceScreen';
 import MyAccountScreen from './screens/MyAccountScreen';
 import UpdateAccountScreen from './screens/UpdateAccountScreen';
-// import AddOutletScreen from './screens/AddOutletScreen';
+import AddOutletScreen from './screens/AddOutletScreen';
 import BookedOutletScreen from './screens/BookedOutletScreen';
 import RecentTransactionScreen from './screens/RecentTransactionScreen';
 import BookOutletScreen from './screens/BookOutletScreen';
@@ -59,31 +59,31 @@ const TabNavigator = () => {
     <Tab.Navigator screenOptions={({ route }) => ({
       tabBarIcon: ({ color, size }) => {
         let iconName = '';
-       
-         if (route.name === 'Search') {
-            iconName = 'search'
-          } else if(route.name === "BookedOutlet" ){
-            iconName = 'calendar'
-          } else if( route.name === "RecentTransaction" ){
-            iconName = 'bars'
-          } else if( route.name === "MyOutlet" ){
-            iconName = 'plug'
-          } else if(route.name === "MyAccount" ){
-            iconName = 'user'
-          }
 
-         return  <FontAwesome name={iconName} size={size} color={color} />;
+        if (route.name === 'Search') {
+          iconName = 'search'
+        } else if (route.name === "BookedOutlet") {
+          iconName = 'calendar'
+        } else if (route.name === "RecentTransaction") {
+          iconName = 'bars'
+        } else if (route.name === "MyOutlet") {
+          iconName = 'plug'
+        } else if (route.name === "MyAccount") {
+          iconName = 'user'
+        }
+
+        return <FontAwesome name={iconName} size={size} color={color} />;
       },
       // tabBarActiveTintColor: '#ec6e5b',
       // tabBarInactiveTintColor: '#335561',
       headerShown: false,
     })}>
-      <Tab.Screen  name="Search" component={SearchScreen} />
+      <Tab.Screen name="Search" component={SearchScreen} />
       <Tab.Screen name="BookedOutlet" component={BookedOutletScreen} />
       <Tab.Screen name="RecentTransaction" component={RecentTransactionScreen} />
       <Tab.Screen name="MyOutlet" component={MyOutletScreen} />
       <Tab.Screen name="MyAccount" component={MyAccountScreen} />
-     
+
     </Tab.Navigator>
   );
 };
@@ -96,7 +96,7 @@ export default function App() {
           <Stack.Navigator screenOptions={{ headerShown: false }}>
             <Stack.Screen name="DevScreen" component={DevScreen} />
             <Stack.Screen name="MyAccountScreen" component={TabNavigator} />
-            {/* <Stack.Screen name="AddOutletScreen" component={AddOutletScreen} /> */}
+            <Stack.Screen name="AddOutletScreen" component={AddOutletScreen} />
             <Stack.Screen name="UpdateAccountScreen" component={UpdateAccountScreen} />
             <Stack.Screen name="HomeScreen" component={HomeScreen} />
             <Stack.Screen name="SigninScreen" component={SigninScreen} />
