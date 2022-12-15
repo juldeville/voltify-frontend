@@ -1,6 +1,6 @@
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import { useEffect, useRef, useState } from 'react';
-import { Camera, FlashMode } from 'expo-camera';
+import { Camera, CameraType, FlashMode } from 'expo-camera';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import { useIsFocused } from '@react-navigation/native';
 
@@ -30,9 +30,9 @@ export default function QrCodeScreen() {
   }
 
   return (
-    <Camera ref={(ref) => cameraRef = ref} flashMode={flashMode} style={styles.camera}>
+    <Camera type={type} ref={(ref) => cameraRef = ref} flashMode={flashMode} style={styles.camera}>
       <View style={styles.buttonsContainer}>
-        <TouchableOpacity onPress={() => setType(type === Camera.back ? CameraType.front : CameraType.back)} style={styles.button}>
+        <TouchableOpacity onPress={() => setType(type === CameraType.back ? CameraType.front : CameraType.back)} style={styles.button}>
           <FontAwesome name='rotate-right' size={25} color='#ffffff' />
         </TouchableOpacity>
         <TouchableOpacity onPress={() => setFlashMode(flashMode === FlashMode.off ? FlashMode.torch : FlashMode.off)} style={styles.button}>

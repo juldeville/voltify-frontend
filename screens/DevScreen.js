@@ -43,6 +43,14 @@ export default function HomeScreen({ navigation }) {
                 <Text style={styles.textButton}>Search</Text>
             </TouchableOpacity>
 
+            <TouchableOpacity onPress={() => navigation.navigate('StartChargingScreen')} style={styles.buttonTwo} activeOpacity={0.8}>
+                <Text style={styles.textButton}>StartCharging</Text>
+            </TouchableOpacity>
+            
+            <TouchableOpacity onPress={() => navigation.navigate('QrCodeScreen')} style={styles.buttonTwo} activeOpacity={0.8}>
+                <Text style={styles.textButton}>QRCODESCREEN</Text>
+            </TouchableOpacity>
+
         </KeyboardAvoidingView>
     )
 }
