@@ -6,6 +6,9 @@ import { SelectList } from 'react-native-dropdown-select-list';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import WeekdayPicker from "react-native-weekday-picker";
 
+import RNDateTimePicker from "react-native-weekday-picker";
+
+
 
 
 
@@ -119,6 +122,8 @@ export default function AddOutletScreen({ navigation }) {
 
 
             <Text style={styles.title}>Add your outlet</Text>
+
+            <RNDateTimePicker dayOfWeekFormat={'{dayofweek.abbreviated(2)}'} />
 
             <WeekdayPicker
                 days={days}

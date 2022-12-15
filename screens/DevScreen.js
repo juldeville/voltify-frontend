@@ -39,6 +39,10 @@ export default function HomeScreen({ navigation }) {
                 <Text style={styles.textButton}>Add Outlet</Text>
             </TouchableOpacity>
 
+            <TouchableOpacity onPress={() => navigation.navigate('SearchScreen')} style={styles.buttonTwo} activeOpacity={0.8}>
+                <Text style={styles.textButton}>Search</Text>
+            </TouchableOpacity>
+
         </KeyboardAvoidingView>
     )
 }

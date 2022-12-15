@@ -102,7 +102,9 @@ export default function App() {
             <Stack.Screen name="SigninScreen" component={SigninScreen} />
             <Stack.Screen name="SignupScreen" component={SignupScreen} />
             <Stack.Screen name="ChoiceScreen" component={ChoiceScreen} />
-            <Stack.Screen name="TabNavigator" component={TabNavigator} />
+            <Stack.Screen name="SearchScreen" component={SearchScreen} />
+            <Stack.Screen name="StartChargingScreen" component={StartChargingScreen} />
+            <Stack.Screen name="QrCodeScreen" component={QrCodeScreen} />
           </Stack.Navigator>
         </NavigationContainer>
       </PersistGate>
