@@ -32,13 +32,13 @@ export default function SearchScreen() {
       .then((data) => {
         data.result && setImportPlaces(data.data);
 
-
+        console.log('reception', data);
 
       });
 
   }, []);
 
-  console.log('reception', importPlaces);
+
   console.log('my currentposition is', currentPosition);
 
   const handleNewPlace = () => {
