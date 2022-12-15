@@ -5,36 +5,19 @@ import { signin } from "../reducers/user";
 import * as React from 'react';
 
 
-export default function SigninScreen({ navigation }) {
-    const dispatch = useDispatch();
+export default function MyAccountScreen() {
+   
     const user = useSelector((state) => state.user.value);
 
-    const [signInEmail, setSignInEmail] = useState('');
-    const [signInPassword, setSignInPassword] = useState('');
+    const [firstName, setFirstName] = useState('');
+    const [lastName, setLastName] = useState('');
 
-    const handleConnection = () => {
-        fetch('https://voltify-backend.vercel.app/users/signin', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ email: signInEmail, password: signInPassword }),
-        }).then(response => response.json())
-            .then(data => {
-                if (data.result) {
-                    dispatch(signin({ email: data.email, token: data.token }));
-                    setSignInEmail('');
-                    setSignInPassword('');
-                    console.log('Great succes!');
-                    navigation.navigate('HomeScreen')
-
-                } else {
-                    console.log('You fail!')
-                }
-            });
-    };
-
-
-
-
+    const handleFirstName = () => {
+        
+    }
+    const handleLasttName = () => {
+        
+    }
 
 
     return (
