@@ -62,9 +62,9 @@ const TabNavigator = () => {
       tabBarIcon: ({ color, size }) => {
         let iconName = '';
 
-        if (route.name === 'Search') {
+        if (route.name === 'SearchScreen') {
           iconName = 'search'
-        } else if (route.name === "BookedOutlet") {
+        } else if (route.name === "DevScreen") {
           iconName = 'calendar'
         } else if (route.name === "RecentTransaction") {
           iconName = 'bars'
@@ -101,9 +101,10 @@ export default function App() {
             <Stack.Screen name="AddOutletScreen" component={AddOutletScreen} />
             <Stack.Screen name="UpdateAccountScreen" component={UpdateAccountScreen} />
             <Stack.Screen name="SigninScreen" component={SigninScreen} />
+            <Stack.Screen name="DevScreen" component={DevScreen}/>
             <Stack.Screen name="SignupScreen" component={SignupScreen} />
             <Stack.Screen name="ChoiceScreen" component={ChoiceScreen} />
-            <Stack.Screen name="SearchScreen" component={SearchScreen} />
+            <Stack.Screen name="SearchScreen" component={TabNavigator} />
             <Stack.Screen name="StartChargingScreen" component={StartChargingScreen} />
             <Stack.Screen name="QrCodeScreen" component={QrCodeScreen} />
           </Stack.Navigator>

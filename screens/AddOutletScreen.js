@@ -104,7 +104,7 @@ export default function AddOutletScreen({ navigation }) {
                     .then(data => {
                         if (data.result) {
                             console.log('Great succes!');
-                            navigation.navigate('SignupScreen');
+                            navigation.navigate('SearchScreen');
 
 
                         } else {

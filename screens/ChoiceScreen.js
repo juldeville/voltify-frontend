@@ -17,8 +17,8 @@ export default function ChoiceScreen({ navigation }) {
 
       <Text style={styles.title}>What would you like to do?</Text>
 
-      <TouchableOpacity onPress={() => navigation.navigate('HomeScreen')} style={styles.button} activeOpacity={0.8}>
-        <Text style={styles.textButton}>Locate charging outlets</Text>
+      <TouchableOpacity onPress={() => navigation.navigate('SearchScreen')} style={styles.button} activeOpacity={0.8}>
+        <Text style={styles.textButton}>Locate charging outletssss</Text>
       </TouchableOpacity>
 
 
