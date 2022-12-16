@@ -80,8 +80,8 @@ const TabNavigator = () => {
       // tabBarInactiveTintColor: '#335561',
       headerShown: false,
     })}>
-      <Tab.Screen name="Search" component={SearchScreen} />
-      <Tab.Screen name="BookedOutlet" component={BookedOutletScreen} />
+      <Tab.Screen name="SearchScreen" component={SearchScreen} />
+      <Tab.Screen name="DevScreen" component={DevScreen} />
       <Tab.Screen name="RecentTransaction" component={RecentTransactionScreen} />
       <Tab.Screen name="MyOutlet" component={MyOutletScreen} />
       <Tab.Screen name="MyAccount" component={MyAccountScreen} />
@@ -96,11 +96,10 @@ export default function App() {
       <PersistGate persistor={persistor}>
         <NavigationContainer>
           <Stack.Navigator screenOptions={{ headerShown: false }}>
-            <Stack.Screen name="DevScreen" component={DevScreen} />
+            <Stack.Screen name="HomeScreen" component={HomeScreen} />
             <Stack.Screen name="MyAccountScreen" component={TabNavigator} />
             <Stack.Screen name="AddOutletScreen" component={AddOutletScreen} />
             <Stack.Screen name="UpdateAccountScreen" component={UpdateAccountScreen} />
-            <Stack.Screen name="HomeScreen" component={HomeScreen} />
             <Stack.Screen name="SigninScreen" component={SigninScreen} />
             <Stack.Screen name="SignupScreen" component={SignupScreen} />
             <Stack.Screen name="ChoiceScreen" component={ChoiceScreen} />

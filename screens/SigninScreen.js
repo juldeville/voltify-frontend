@@ -22,7 +22,7 @@ export default function SigninScreen({ navigation }) {
                     setSignInEmail('');
                     setSignInPassword('');
                     console.log('Great succes!');
-                    navigation.navigate('HomeScreen')
+                    navigation.navigate('SearchScreen')
 
                 } else {
                     console.log('You fail!')
