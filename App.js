@@ -32,13 +32,15 @@ import StartChargingScreen from './screens/StartChargingScreen';
 import { Provider } from 'react-redux';
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import user from './reducers/user';
+import outlet from './reducers/outlet';
+
 
 // redux-persist imports
 import { persistStore, persistReducer } from 'redux-persist';
 import { PersistGate } from 'redux-persist/integration/react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const reducers = combineReducers({ user });
+const reducers = combineReducers({ user, outlet });
 const persistConfig = {
   key: 'voltify',
   storage: AsyncStorage,
