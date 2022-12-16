@@ -1,10 +1,13 @@
 import { useEffect, useState } from 'react';
-import { Modal, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { Keyboard, Modal, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
 import * as Location from 'expo-location';
 import { current } from '@reduxjs/toolkit';
 import { registerOutlet } from '../reducers/outlet'
 import { useDispatch, useSelector } from 'react-redux';
+import * as geolib from 'geolib';
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
+
 
 
 export default function SearchScreen() {
@@ -77,17 +80,48 @@ export default function SearchScreen() {
   };
 
   let infoCard;
+  let distance;
 
   const displayCard = (latitude, longitude, price, address, type) => {
     console.log('info')
     dispatch(registerOutlet({ id: outletID }));
+    distance = geolib.getDistance({ latitude: currentPosition.latitude, longitude: currentPosition.longitude }, { latitude: latitude, longitude: longitude }) / 1000;
+    distance = distance.toFixed(1);
+    console.log('My DISTANCE is', distance);
     infoCard =
       < View style={styles.infoCardView} >
 
-        <Text style={styles.textCard}>{price}</Text>
-        <Text style={styles.textCard}>{address}</Text>
+        <View style={styles.infoCardSub1}>
+          <Text style={styles.textCard}>{distance} km from here</Text>
 
-        <Text style={styles.textCard}>{type}</Text>
+          <View style={styles.outletType}>
+            <FontAwesome name="plug" />
+            <Text style={styles.textCard}> {type}</Text>
+          </View>
+
+        </View>
+
+        <View style={styles.infoCardSub2}>
+          <Text style={styles.textCard}>{address}</Text>
+          <Text style={styles.textCard}>{price}€/min</Text>
+        </View>
+
+        <View style={styles.infoCardSub3}>
+          <TouchableOpacity onPress={() => handleNewPlace()} style={styles.buttonCard} activeOpacity={0.8}>
+            <Text style={styles.textButton}>Go there</Text>
+          </TouchableOpacity>
+
+          <TouchableOpacity onPress={() => handleNewPlace()} style={styles.buttonCard2} activeOpacity={0.8}>
+            <Text style={styles.textButton}>Start charging</Text>
+          </TouchableOpacity>
+
+
+
+
+        </View>
+
+
+
 
 
       </View >
@@ -130,7 +164,7 @@ export default function SearchScreen() {
       {selectedOutletID}
 
 
-      <MapView style={styles.map} region={searchedPlace ? searchedPlace : currentPosition}>
+      <MapView style={styles.map} region={searchedPlace ? searchedPlace : currentPosition} onPress={() => { Keyboard.dismiss(), setSelectedOutletID() }}>
         {currentPosition && <Marker coordinate={currentPosition} title="My position" pinColor="black" />}
         {markers}
 
@@ -176,10 +210,8 @@ const styles = StyleSheet.create({
   },
 
   infoCardView: {
-    flexDirection: 'row',
     justifyContent: 'space-between', backgroundColor: 'white',
     borderRadius: 20,
-    alignItems: 'center',
     shadowColor: '#000',
     shadowOffset: {
       width: 0,
@@ -195,6 +227,31 @@ const styles = StyleSheet.create({
     right: '3%',
     paddingLeft: 10,
     paddingRight: 10,
+    alignItems: "center",
+  },
+
+  infoCardSub1: {
+    width: '90%',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    margin: '5%',
+  },
+
+  infoCardSub2: {
+    width: '90%',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+
+  },
+
+  infoCardSub3: {
+    width: '90%',
+    flexDirection: 'row',
+  },
+
+  outletType: {
+    flexDirection: 'row',
+    alignItems: 'center',
   },
 
   input: {
@@ -214,6 +271,29 @@ const styles = StyleSheet.create({
     backgroundColor: '#020202',
     borderRadius: 10,
   },
+
+  buttonCard: {
+    width: '50%',
+    alignItems: 'center',
+    marginTop: 20,
+    marginBottom: 10,
+    marginRight: 10,
+    padding: 8,
+    backgroundColor: '#020202',
+    borderRadius: 10,
+  },
+
+  buttonCard2: {
+    width: '50%',
+    alignItems: 'center',
+    marginTop: 20,
+    marginBottom: 10,
+    marginRight: 10,
+    padding: 8,
+    backgroundColor: '#0FCCA7',
+    borderRadius: 10,
+  },
+
   textButton: {
     color: '#ffffff',
     height: 24,
