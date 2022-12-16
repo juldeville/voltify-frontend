@@ -51,6 +51,10 @@ export default function HomeScreen({ navigation }) {
                 <Text style={styles.textButton}>QRCODESCREEN</Text>
             </TouchableOpacity>
 
+            <TouchableOpacity onPress={() => navigation.navigate('FinishedChargingScreen')} style={styles.buttonTwo} activeOpacity={0.8}>
+                <Text style={styles.textButton}>FinishedCharging</Text>
+            </TouchableOpacity>
+
         </KeyboardAvoidingView>
     )
 }
@@ -105,10 +109,10 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         paddingTop: 8,
         width: '80%',
-        marginTop: 20,
+        marginTop: 10,
         backgroundColor: '#020202',
         borderRadius: 10,
-        marginBottom: 20,
+        marginBottom: 10,
     },
 
     textButton: {

@@ -106,6 +106,7 @@ export default function App() {
             <Stack.Screen name="SearchScreen" component={SearchScreen} />
             <Stack.Screen name="StartChargingScreen" component={StartChargingScreen} />
             <Stack.Screen name="QrCodeScreen" component={QrCodeScreen} />
+            <Stack.Screen name="FinishedChargingScreen" component={FinishedChargingScreen} />
           </Stack.Navigator>
         </NavigationContainer>
       </PersistGate>
