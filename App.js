@@ -22,6 +22,7 @@ import PaymentScreen from './screens/PaymentScreen';
 import SearchScreen from './screens/SearchScreen';
 import SelectOutletScreen from './screens/SelectOutletScreen';
 import StartChargingScreen from './screens/StartChargingScreen';
+import { useFonts } from 'expo-font';
 
 
 
@@ -91,6 +92,16 @@ const TabNavigator = () => {
 };
 
 export default function App() {
+  const [loaded] = useFonts({
+    'Roboto-Black': require('./assets/fonts/Roboto-Black.ttf'),
+    'Roboto-BlackItalic': require('./assets/fonts/Roboto-BlackItalic.ttf'),
+
+  });
+
+  if (!loaded) {
+    return null;
+  }
+
   return (
     <Provider store={store}>
       <PersistGate persistor={persistor}>

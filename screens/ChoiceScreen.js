@@ -2,20 +2,13 @@
 import { StyleSheet, Text, View, Button, TouchableOpacity, KeyboardAvoidingView, requireNativeComponent } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { useFonts } from 'expo-font';
+
 
 
 const Stack = createNativeStackNavigator();
 
 export default function ChoiceScreen({ navigation }) {
 
-  const [loaded] = useFonts({
-    'Roboto-Black': require('../assets/fonts/Roboto-Black.ttf'),
-  });
-
-  if (!loaded) {
-    return null;
-  }
 
   return (
 
