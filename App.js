@@ -62,7 +62,7 @@ const TabNavigator = () => {
       tabBarIcon: ({ color, size }) => {
         let iconName = '';
 
-        if (route.name === 'SearchScreen') {
+        if (route.name === 'Search') {
           iconName = 'search'
         } else if (route.name === "DevScreen") {
           iconName = 'calendar'
@@ -80,7 +80,7 @@ const TabNavigator = () => {
       // tabBarInactiveTintColor: '#335561',
       headerShown: false,
     })}>
-      <Tab.Screen name="SearchScreen" component={SearchScreen} />
+      <Tab.Screen name="Search" component={SearchScreen} />
       <Tab.Screen name="DevScreen" component={DevScreen} />
       <Tab.Screen name="RecentTransaction" component={RecentTransactionScreen} />
       <Tab.Screen name="MyOutlet" component={MyOutletScreen} />

@@ -60,7 +60,7 @@ const styles = StyleSheet.create({
         width: '80%',
         fontSize: 38,
         fontWeight: '600',
-        fontFamily: 'Roboto',
+        fontFamily: 'Roboto-Black',
         fontWeight: 'bold',
         textAlign: 'center',
         marginTop: 30,
