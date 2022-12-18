@@ -7,24 +7,31 @@ import { Rating } from 'react-simple-star-rating'
 
 export default function FinishedChargingScreen({navigation}) {
 
-  // const Outlet = useSelector((state) => state.outlet.value);
-  // en attente traiter ce week-end
-  const [vote, setVote] = useState('')
+  const outlet = useSelector((state) => state.outlet.value);
+
+  // attente de outlet.id
+ 
   const [personalNote, setPersonalNote] = useState(0);
 
-  const updateVote = () => {
-    fetch(`https://voltify-backend.vercel.app/users/addVote`,{
-        method: 'PUT',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({token: Outlet.token, updateUser: vote}),
-    })
+  const addVote = () => {
+    console.log("vote:", personalNote)
+      fetch(`https://voltify-backend.vercel.app/outlets/addVote`,{
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({id: outlet.id, vote: personalNote}),
+      })
 
-    .then(response => response.json())
-    .then(data =>{
-      console.log('Thank you')
-        navigation.navigate('HomeScreen'); 
-      });
-    }
+      .then(response => response.json())
+      .then(data =>{
+        console.log(data)
+        if(data.result == true){
+          navigation.navigate('HomeScreen'); 
+        }else{
+          alert("outlet not found")
+        }
+      
+      })
+  }
 
 
   const personalStars = [];
@@ -42,9 +49,9 @@ export default function FinishedChargingScreen({navigation}) {
         <Text style={styles.textone}>You recharged your vehicule for a total amount of 14.63€</Text>
         <Text style={styles.texttow}>Rate your experience with this outlet:</Text>
       <View>
-      <TouchableOpacity onPress={() =>updateVote()} style={styles.star}>{personalStars}</TouchableOpacity>
+      <TouchableOpacity style={styles.star}>{personalStars}</TouchableOpacity>
       </View>
-      <TouchableOpacity onPress={() => navigation.navigate('SearchScreen')} style={styles.button} activeOpacity={0.8}>
+      <TouchableOpacity onPress={() =>addVote() } style={styles.button} activeOpacity={0.8}>
         <Text style={styles.textButton}>Complete</Text>
       </TouchableOpacity>
   </View>
