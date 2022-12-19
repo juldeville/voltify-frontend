@@ -90,6 +90,7 @@ export default function SigninScreen({ navigation }) {
                     </View>
                 </KeyboardAvoidingView>
             </Modal>
+
             <View style={{ width: "100%", flexDirection: 'row', justifyContent: 'center', alignItems: 'center', position: 'relative' }}>
                 <TextInput
                     placeholder="Password"
@@ -98,12 +99,12 @@ export default function SigninScreen({ navigation }) {
             </View>
 
             <TextInput
-                placeholder={userInfo.email}
-                onChangeText={(value) => { console.log(value); setEmail(value) }} value={email} style={styles.inputEmail} keyboardType="email-address" autoCapitalize='none' textContentType='emailaddress' />
+                defaultValue={userInfo.email}
+                onChangeText={(value) => { console.log(value); setEmail(value) }} style={styles.inputEmail} keyboardType="email-address" autoCapitalize='none' textContentType='emailaddress' />
 
             <TextInput
-                placeholder={userInfo.address}
-                onChangeText={(value) => { console.log(value); setAddress(value) }} value={address} style={styles.input} />
+                defaultValue={userInfo.address}
+                onChangeText={(value) => { console.log(value); setAddress(value) }} style={styles.input} />
 
             <TextInput
                 placeholder="Your IBAN to receive payments"
