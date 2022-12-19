@@ -13,19 +13,19 @@ export default function MyOutletScreen() {
   // Pour savoir si une prise a bien été trouvé
   const [validOutlet, setValidOutlet] = useState(false)
 
-useEffect(() => {
+  useEffect(() => {
     fetch(`https://voltify-backend.vercel.app/outlets/displayUserOutlet/${user.token}`)
       .then(response => response.json())
       .then(data => {
         console.log('UseEffect data', data)
         setOutletLatitude(data.outlet.latitude);
         setOutletLongitude(data.outlet.longitude);
-        if(data.result) {
+        if (data.result) {
           setValidOutlet(true)
         }
       });
   }, []);
-console.log('outletLatitude for the win', outletLatitude)
+  console.log('outletLatitude for the win', outletLatitude)
 
   const currentPosition = {
     latitude: outletLatitude,
@@ -38,13 +38,13 @@ console.log('outletLatitude for the win', outletLatitude)
 
   if (!validOutlet) {
     return (<View style={styles.container}>
-      <Text style={{fontSize: "18px"}}>You currently have no outlet, please contact support at maximeGomez@laposte.fr</Text>
+      <Text>You currently have no outlet, please contact support at maximeGomez@laposte.fr</Text>
     </View>)
   }
 
   return (
     <View style={styles.container}>
-      <MapView  style={styles.map} region={currentPosition}>
+      <MapView style={styles.map} region={currentPosition}>
         {currentPosition && <Marker coordinate={currentPosition} title="My position" pinColor="black" />}
       </MapView>
     </View>
@@ -52,12 +52,12 @@ console.log('outletLatitude for the win', outletLatitude)
 }
 
 const styles = StyleSheet.create({
- container: {
-   flex: 1,
-   backgroundColor: '#fff',
-   justifyContent: 'center',
- },
- map: {
-  flex: 1,
- }
+  container: {
+    flex: 1,
+    backgroundColor: '#fff',
+    justifyContent: 'center',
+  },
+  map: {
+    flex: 1,
+  }
 });

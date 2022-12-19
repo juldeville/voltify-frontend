@@ -17,32 +17,32 @@ export default function HomeScreen({ navigation }) {
 
     return (
         <>
-        <KeyboardAvoidingView style={styles.container} behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
+            <KeyboardAvoidingView style={styles.container} behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
 
-            <Text style={styles.title}>Welcome to</Text>
+                <Text style={styles.title}>Welcome to</Text>
 
-            <Image style={styles.logo} source={require('../assets/voltify-logo.png')} />
+                <Image style={styles.logo} source={require('../assets/voltify-logo.png')} />
 
-            <Image style={styles.image} source={require('../assets/home-background.png')} />
+                <Image style={styles.image} source={require('../assets/home-background.png')} />
 
-            <TouchableOpacity onPress={() => navigation.navigate('SignupScreen')} style={styles.button} activeOpacity={0.8}>
-                <Text style={styles.textButton}>Sign up</Text>
-            </TouchableOpacity>
+                <TouchableOpacity onPress={() => navigation.navigate('SignupScreen')} style={styles.button} activeOpacity={0.8}>
+                    <Text style={styles.textButton}>Sign up</Text>
+                </TouchableOpacity>
 
-            <TouchableOpacity onPress={() => navigation.navigate('SigninScreen')} style={styles.buttonTwo} activeOpacity={0.8}>
-                <Text style={styles.textButton}>Sign in</Text>
-            </TouchableOpacity>
+                <TouchableOpacity onPress={() => navigation.navigate('SigninScreen')} style={styles.buttonTwo} activeOpacity={0.8}>
+                    <Text style={styles.textButton}>Sign in</Text>
+                </TouchableOpacity>
 
-            <TouchableOpacity onPress={() => navigation.navigate('ChoiceScreen')} style={styles.buttonTwo} activeOpacity={0.8}>
-                <Text style={styles.textButton}>Choice</Text>
-            </TouchableOpacity>
-            
-        </KeyboardAvoidingView>
-        
-        {/* <AppLoader/> */}
+                <TouchableOpacity onPress={() => navigation.navigate('ChoiceScreen')} style={styles.buttonTwo} activeOpacity={0.8}>
+                    <Text style={styles.textButton}>Choice</Text>
+                </TouchableOpacity>
+
+            </KeyboardAvoidingView>
+
+            {/* <AppLoader /> */}
         </>
-        
-        
+
+
     )
 }
 
