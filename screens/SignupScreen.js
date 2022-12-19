@@ -19,6 +19,7 @@ export default function HomeScreen({ navigation }) {
     const [lastName, setLastName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('')
+    const [address, setAddress] = useState('')
 
     /*    
         set password visibility eye
@@ -40,7 +41,7 @@ export default function HomeScreen({ navigation }) {
         fetch('https://voltify-backend.vercel.app/users/signup', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ firstName: firstName, lastName: lastName, email: email, password: password, }),
+            body: JSON.stringify({ firstName: firstName, lastName: lastName, email: email, password: password, address: address }),
         }).then(response => response.json())
             .then(data => {
                 console.log('data', data)
@@ -50,6 +51,8 @@ export default function HomeScreen({ navigation }) {
                     setLastName('');
                     setEmail('');
                     setPassword('')
+                    setAddress('')
+
                     navigation.navigate('ChoiceScreen')
                 }
             })
@@ -63,6 +66,7 @@ export default function HomeScreen({ navigation }) {
                 <TextInput placeholder="First Name" onChangeText={(value) => setFirstName(value)} value={firstName} style={styles.input} />
                 <TextInput placeholder="Last Name" onChangeText={(value) => setLastName(value)} value={lastName} style={styles.input} />
                 <TextInput placeholder="Email" onChangeText={(value) => setEmail(value)} value={email} style={styles.input} keyboardType="email-address" autoCapitalize='none' textContentType='emailaddress' />
+                <TextInput placeholder="Address" onChangeText={(value) => setAddress(value)} value={address} style={styles.input} autoCorrect={false} autoCapitalize={'none'} />
                 <TextInput placeholder="Password" onChangeText={(value) => setPassword(value)} value={password} style={styles.input} autoCorrect={false} autoCapitalize={'none'} secureTextEntry={true} />
                 <TouchableOpacity onPress={() => handleSignUp()} style={styles.button} activeOpacity={0.8}>
                     <Text style={styles.textButton}>Next</Text>

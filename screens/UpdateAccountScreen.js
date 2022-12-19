@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { StyleSheet, Text, TextInput, TouchableOpacity, View, KeyboardAvoidingView, Modal } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { signin, updateEmail } from "../reducers/user";
@@ -13,6 +13,7 @@ export default function SigninScreen({ navigation }) {
     const [address, setAddress] = useState('');
     const [iban, setIban] = useState('');
     const [modalVisible, setModalVisible] = useState(false);
+    const [userInfo, setUserInfo] = useState({});
 
     const handleModifyPassword = () => {
         setModalVisible(true)
@@ -22,6 +23,21 @@ export default function SigninScreen({ navigation }) {
         setModalVisible(false)
     }
 
+
+    useEffect(() => {
+        fetch(`https://voltify-backend.vercel.app/users/viewUser/${user.token}`)
+            .then(response => response.json())
+            .then(data => {
+                if (data.result) {
+                    console.log('yes')
+                    setUserInfo(data.profile)
+                }
+            });
+    }, []);
+
+    console.log('MYUSER', userInfo);
+
+
     const handleUpdate = () => {
         fetch('https://voltify-backend.vercel.app/users/updateUser', {
             method: 'PUT',
@@ -30,7 +46,7 @@ export default function SigninScreen({ navigation }) {
         }).then(response => response.json())
             .then(data => {
                 if (data.result) {
-                    dispatch(updateEmail({ email: data.email}));
+                    dispatch(updateEmail({ email: data.email }));
                     console.log('Great success!');
                     navigation.navigate('HomeScreen')
                 } else {
@@ -43,63 +59,63 @@ export default function SigninScreen({ navigation }) {
         fetch('https://voltify-backend.vercel.app/users/updatePassword', {
             method: 'PUT',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({token: user.token, password: trialPassword, updatedPassword: newPassword}),
+            body: JSON.stringify({ token: user.token, password: trialPassword, updatedPassword: newPassword }),
         }).then(response => response.json())
             .then(data => {
-                if(data.result) {
+                if (data.result) {
                     setModalVisible(false)
                     console.log('password updated!')
                 } else {
-                    console.log('data error',data.error)
+                    console.log('data error', data.error)
                 }
             })
     }
 
     return (
-    <KeyboardAvoidingView style={styles.container} behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
-    <Text style={styles.title}>Account</Text>
-    <Modal visible={modalVisible} animationType="fade" transparent stume>
-    <KeyboardAvoidingView style={styles.container1} behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
-        <View style={styles.centeredView}>
-          <View style={styles.modalView}>
-            <TextInput placeholder="Current Password" onChangeText={(value) => {console.log(value);setTrialPassword(value)}} value={trialPassword} style={styles.input} secureTextEntry={true} placeholderTextColor={'#696969'} />
-            <TextInput placeholder="New Password" onChangeText={(value) => {console.log(value);setNewPassword(value)}} value={newPassword} style={styles.input} secureTextEntry={true} placeholderTextColor={'#696969'} />
-            <TouchableOpacity  onPress={() => handleNewPassword()}  style={styles.buttonModal} activeOpacity={0.8}>
-              <Text style={styles.textButton}>Add</Text>
-            </TouchableOpacity>
-            <TouchableOpacity onPress={() => handleCloseModal()}  style={styles.buttonModalCancel} activeOpacity={0.8}>
-              <Text style={styles.textButton}>Close</Text>
-            </TouchableOpacity>
-          </View>
-        </View>
-        </KeyboardAvoidingView>
-      </Modal>
-            <View style={{width:"100%", flexDirection: 'row', justifyContent: 'center', alignItems: 'center', position: 'relative'}}>
+        <KeyboardAvoidingView style={styles.container} behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
+            <Text style={styles.title}>Account</Text>
+            <Modal visible={modalVisible} animationType="fade" transparent stume>
+                <KeyboardAvoidingView style={styles.container1} behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
+                    <View style={styles.centeredView}>
+                        <View style={styles.modalView}>
+                            <TextInput placeholder="Current Password" onChangeText={(value) => { console.log(value); setTrialPassword(value) }} value={trialPassword} style={styles.input} secureTextEntry={true} placeholderTextColor={'#696969'} />
+                            <TextInput placeholder="New Password" onChangeText={(value) => { console.log(value); setNewPassword(value) }} value={newPassword} style={styles.input} secureTextEntry={true} placeholderTextColor={'#696969'} />
+                            <TouchableOpacity onPress={() => handleNewPassword()} style={styles.buttonModal} activeOpacity={0.8}>
+                                <Text style={styles.textButton}>Add</Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity onPress={() => handleCloseModal()} style={styles.buttonModalCancel} activeOpacity={0.8}>
+                                <Text style={styles.textButton}>Close</Text>
+                            </TouchableOpacity>
+                        </View>
+                    </View>
+                </KeyboardAvoidingView>
+            </Modal>
+            <View style={{ width: "100%", flexDirection: 'row', justifyContent: 'center', alignItems: 'center', position: 'relative' }}>
                 <TextInput
                     placeholder="Password"
                     secureTextEntry={true} editable={false} value='thisisafake' style={styles.inputWithButton} />
-                <TouchableOpacity title="Modify password" style={styles.buttonInput} onPress={() => handleModifyPassword()}><Text style={{color: "blue"}}>Modify Password</Text></TouchableOpacity>
+                <TouchableOpacity title="Modify password" style={styles.buttonInput} onPress={() => handleModifyPassword()}><Text style={{ color: "blue" }}>Modify Password</Text></TouchableOpacity>
             </View>
 
             <TextInput
-                placeholder="Email"
-                 onChangeText={(value) => { console.log(value); setEmail(value) }} value={email}  style={styles.inputEmail} keyboardType="email-address" autoCapitalize='none' textContentType='emailaddress' />
+                placeholder={userInfo.email}
+                onChangeText={(value) => { console.log(value); setEmail(value) }} value={email} style={styles.inputEmail} keyboardType="email-address" autoCapitalize='none' textContentType='emailaddress' />
 
             <TextInput
-                placeholder="Address"
-                 onChangeText={(value) => { console.log(value); setAddress(value) }} value={address} style={styles.input} />
+                placeholder={userInfo.address}
+                onChangeText={(value) => { console.log(value); setAddress(value) }} value={address} style={styles.input} />
 
             <TextInput
-                placeholder="IBAN"
-                onChangeText={(value) => { console.log(value); setIban(value) }} value={iban}  style={styles.input} />
+                placeholder="Your IBAN to receive payments"
+                onChangeText={(value) => { console.log(value); setIban(value) }} value={iban} style={styles.input} />
             <TouchableOpacity onPress={() => handleUpdate()} style={styles.button} activeOpacity={0.8}>
                 <Text style={styles.textButton}>Submit</Text>
             </TouchableOpacity>
-            <TouchableOpacity onPress={() => navigation.navigate('MyAccountScreen')} style={styles.buttonTwo} activeOpacity={0.8}>
+            <TouchableOpacity onPress={() => navigation.navigate('HomeScreen')} style={styles.buttonTwo} activeOpacity={0.8}>
                 <Text style={styles.textButton}>Back</Text>
             </TouchableOpacity>
 
-    </KeyboardAvoidingView>
+        </KeyboardAvoidingView>
     )
 }
 
@@ -124,26 +140,26 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
-        
-      },
 
-      modalView: {
+    },
+
+    modalView: {
         backgroundColor: 'white',
         borderRadius: 20,
         padding: 30,
         alignItems: 'center',
         shadowColor: '#000',
         shadowOffset: {
-          width: 0,
-          height: 2,
+            width: 0,
+            height: 2,
         },
         shadowOpacity: 0.25,
         shadowRadius: 4,
         elevation: 5,
         width: 350,
         height: 350,
-      },
-      
+    },
+
     title: {
         width: '80%',
         fontSize: 38,
@@ -158,7 +174,7 @@ const styles = StyleSheet.create({
         borderBottomWidth: 1,
         fontSize: 18,
         marginBottom: 25,
-        
+
     },
     buttonInput: {
         position: 'absolute',
