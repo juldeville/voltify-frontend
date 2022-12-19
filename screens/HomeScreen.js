@@ -39,7 +39,7 @@ export default function HomeScreen({ navigation }) {
             
         </KeyboardAvoidingView>
         
-        {/* <AppLoader/> */}
+        {/* <AppLoader/>  */}
         </>
         
         
