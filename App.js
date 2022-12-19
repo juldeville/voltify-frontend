@@ -22,6 +22,8 @@ import PaymentScreen from './screens/PaymentScreen';
 import SearchScreen from './screens/SearchScreen';
 import SelectOutletScreen from './screens/SelectOutletScreen';
 import StartChargingScreen from './screens/StartChargingScreen';
+import ChargingScreen from './screens/ChargingScreen';
+import CheckoutScreen from './screens/CheckoutScreen';
 import { useFonts } from 'expo-font';
 
 
@@ -119,6 +121,8 @@ export default function App() {
             <Stack.Screen name="StartChargingScreen" component={StartChargingScreen} />
             <Stack.Screen name="QrCodeScreen" component={QrCodeScreen} />
             <Stack.Screen name="FinishedChargingScreen" component={FinishedChargingScreen} />
+            <Stack.Screen name="ChargingScreen" component={ChargingScreen} />
+            <Stack.Screen name="CheckoutScreen" component={CheckoutScreen} />
           </Stack.Navigator>
         </NavigationContainer>
       </PersistGate>

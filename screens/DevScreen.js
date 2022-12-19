@@ -55,6 +55,10 @@ export default function HomeScreen({ navigation }) {
                 <Text style={styles.textButton}>FinishedCharging</Text>
             </TouchableOpacity>
 
+            <TouchableOpacity onPress={() => navigation.navigate('ChargingScreen')} style={styles.buttonTwo} activeOpacity={0.8}>
+                <Text style={styles.textButton}>Charging</Text>
+            </TouchableOpacity>
+
         </KeyboardAvoidingView>
     )
 }
