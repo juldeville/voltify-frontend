@@ -1,18 +1,67 @@
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
+import { useState, useEffect, useRef } from 'react';
+import CountUp from 'react-countup';
+
 
 export default function StartChargingScreen({navigation}) {
+    
+   const [count, setCount] = useState(0);
+   const [stop, setStop] = useState(0);
+   const [price, setPrice] = useState(0);
+  const savedCallback = useRef();
+
+  function callback() {
+    setCount(count +1);
+  }
+
+  useEffect(() => {
+    savedCallback.current = callback;
+  });
+
+  useEffect(() => {
+    function tick() {
+      savedCallback.current();
+    }
+
+    let id = setInterval(tick, 1000);
+    return () => clearInterval(id);
+  }, []);
+
+ /*   // Post transaction: à terminer
+    const handleTransaction = () => {
+    fetch('https://voltify-backend.vercel.app/transactions/addTransaction', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({token: user.token}),
+                       
+     })
+}};
+
+
+    // Get outlet: à terminer
+    useEffect(() => {
+    fetch(`https://voltify-backend.vercel.app/transactions`)
+      .then(response => response.json())
+      .then(data => {
+        // duration:
+        // price: 
+      });
+  }, []);
+*/
+
  return (
    <View style={styles.container}>
     <Text style={styles.title} >You are charging</Text>
     <Text style={styles.text}>You have been charging for </Text>
-    <Text style={styles.textone}>19 min</Text>
-    <TouchableOpacity onPress={() => navigation.navigate('CheckoutScreen')} style={styles.button} activeOpacity={0.8}>
+    <Text style={styles.textone}>{count}sec</Text>
+    <TouchableOpacity onPress={() => navigation.navigate('CheckoutScreen')}  style={styles.button} activeOpacity={0.8}>
       <Text style={styles.textButton}>Checkout</Text>
+    
     </TouchableOpacity>
    </View>
      
  );
-}
+ }
 
 const styles = StyleSheet.create({
  container: {
@@ -43,7 +92,6 @@ const styles = StyleSheet.create({
     marginBottom: 120,
     fontWeight: 'bold',
     fontStyle: 'italic',
-    textDecorationLine: 'underline'
   },
 
  button: {
