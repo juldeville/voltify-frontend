@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Keyboard, Modal, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { Keyboard, Modal, StyleSheet, Text, TextInput, TouchableOpacity, View, Linking } from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
 import * as Location from 'expo-location';
 import { current } from '@reduxjs/toolkit';
@@ -8,7 +8,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import * as geolib from 'geolib';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 
-export default function SearchScreen() {
+export default function SearchScreen({ navigation }) {
   const dispatch = useDispatch()
   const outlet = useSelector((state) => state.outlet.value);
 
@@ -38,8 +38,8 @@ export default function SearchScreen() {
       });
   }, []);
 
-  console.log('my currentposition is', currentPosition);
 
+  //Search a specific address.
   const handleNewPlace = () => {
 
     const search = ' ';
@@ -49,7 +49,7 @@ export default function SearchScreen() {
     fetch(`https://api-adresse.data.gouv.fr/search/?q=${formatedAddress}`)
       .then((response) => response.json())
       .then((data) => {
-        // Reatribute the data LONG and LAT to new consts because the LONG and LAT states are only updated when component re-renders
+        // Reatribute the data LONG and LAT to new consts because the LONG and LAT states are only updated when component re-renders.
         const updatedOutletLongitude = data.features[0].geometry.coordinates[0];
         const updatedOutletLatitude = data.features[0].geometry.coordinates[1];
 
@@ -58,49 +58,66 @@ export default function SearchScreen() {
       })
   };
 
-  console.log('searchedplace is', searchedPlace)
 
-  const handleClose = () => {
-    setModalVisible(false);
-    setNewPlace('');
-  };
 
+
+  //Dicplay data in a Card
   let infoCard;
   let distance;
+  const displayCard = (latitude, longitude, price, address, type, outletId, votes) => {
 
-  const displayCard = (latitude, longitude, price, address, type, outletId ) => {
-    console.log('info')
-    console.log(outletId)
+    const scheme = Platform.select({ ios: 'maps:0,0?q=', android: 'geo:0,0?q=' });
+    const latLng = `${latitude},${longitude}`;
+    const label = 'Custom Label';
+    const url = Platform.select({
+      ios: `${scheme}${label}@${latLng}`,
+      android: `${scheme}${latLng}(${label})`
+    });
+
+
+
+
     dispatch(registerOutlet({ id: outletId }));
-    console.log('useSelector outletID', outlet.id)
     distance = geolib.getDistance({ latitude: currentPosition.latitude, longitude: currentPosition.longitude }, { latitude: latitude, longitude: longitude }) / 1000;
     distance = distance.toFixed(1);
-    console.log('My DISTANCE is', distance);
+    let averageVote = votes.reduce((a, b) => a + b, 0) / votes.length;
+    averageVote = averageVote.toFixed(1);
+    console.log(averageVote);
+
     infoCard =
       < View style={styles.infoCardView} >
 
         <View style={styles.infoCardSub1}>
           <Text style={styles.textCard}>{distance} km from here</Text>
 
+
+
           <View style={styles.outletType}>
             <FontAwesome name="plug" />
-            <Text style={{fontWeight:"600", fontSize:15, color: 'black'}}> {type}</Text>
-            <FontAwesome name='times-circle' color='black'  style={{fontSize: 20, marginLeft: 20}} onPress={() => setSelectedOutletID()}/>
+            <Text style={{ fontWeight: "600", fontSize: 15, color: 'black' }}> {type}</Text>
+            <FontAwesome name='times-circle' color='black' style={{ fontSize: 20, marginLeft: 20 }} onPress={() => setSelectedOutletID()} />
           </View>
 
         </View>
 
         <View style={styles.infoCardSub2}>
-          <Text style={styles.textCard}>{address}</Text>
-          <Text style={styles.textCard}>{price}€/min</Text>
+          <Text style={styles.textCardAddress}>{address}</Text>
+          <View style={styles.infoCardSubDetails}>
+            <Text style={styles.textCard}>{price}€/min</Text>
+            <Text style={styles.textCard}><FontAwesome name="star" /> {averageVote}/5</Text>
+
+
+          </View>
         </View>
 
+
+
         <View style={styles.infoCardSub3}>
-          <TouchableOpacity onPress={() => handleNewPlace()} style={styles.buttonCard} activeOpacity={0.8}>
+          <TouchableOpacity onPress={() => Linking.openURL(url)} style={styles.buttonCard} activeOpacity={0.8}>
             <Text style={styles.textButton}>Go there</Text>
           </TouchableOpacity>
 
-          <TouchableOpacity onPress={() => handleNewPlace()} style={styles.buttonCard2} activeOpacity={0.8}>
+          <TouchableOpacity onPress={() => navigation.navigate('StartChargingScreen')} style={styles.buttonCard2} activeOpacity={0.8}>
             <Text style={styles.textButton}>Start charging</Text>
           </TouchableOpacity>
         </View>
@@ -113,14 +130,17 @@ export default function SearchScreen() {
 
   //Display Markers
   let markers
-
   if (importPlaces) {
     markers = importPlaces.map((data, i) => {
-      return <Marker key={i} coordinate={{ latitude: data.latitude, longitude: data.longitude }} title={data.type} pinColor='#0FCCA7' onPress={() => { displayCard(data.latitude, data.longitude, data.price, data.address, data.type, data._id) }} />
+      return <Marker key={i} coordinate={{ latitude: data.latitude, longitude: data.longitude }} title={data.type} pinColor='#0FCCA7' onPress={() => { displayCard(data.latitude, data.longitude, data.price, data.address, data.type, data._id, data.votes) }} />
     });
   }
 
-  console.log('MY CURRENT POSITION IS', currentPosition)
+
+
+
+
+
 
   return (
     <View style={styles.container}>
@@ -203,12 +223,16 @@ const styles = StyleSheet.create({
     width: '90%',
     flexDirection: 'row',
     justifyContent: 'space-between',
-
   },
+
 
   infoCardSub3: {
     width: '90%',
     flexDirection: 'row',
+  },
+
+  infoCardSubDetails: {
+    alignItems: 'flex-end',
   },
 
   outletType: {
@@ -270,5 +294,13 @@ const styles = StyleSheet.create({
     height: 24,
     fontWeight: '600',
     fontSize: 15,
+  },
+
+  textCardAddress: {
+    color: 'black',
+    fontWeight: '600',
+    fontSize: 15,
+    maxWidth: '50%',
+    flexWrap: 'wrap',
   },
 });
