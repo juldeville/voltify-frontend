@@ -17,7 +17,6 @@ export default function SearchScreen() {
   const [modalVisible, setModalVisible] = useState(true);
   const [newPlace, setNewPlace] = useState('');
   const [importPlaces, setImportPlaces] = useState();
-  const [outletID, setOutletID] = useState();
   const [selectedOutletID, setSelectedOutletID] = useState();
 
   useEffect(() => {
@@ -69,9 +68,11 @@ export default function SearchScreen() {
   let infoCard;
   let distance;
 
-  const displayCard = (latitude, longitude, price, address, type) => {
+  const displayCard = (latitude, longitude, price, address, type, outletId ) => {
     console.log('info')
-    dispatch(registerOutlet({ id: outletID }));
+    console.log(outletId)
+    dispatch(registerOutlet({ id: outletId }));
+    console.log('useSelector outletID', outlet.id)
     distance = geolib.getDistance({ latitude: currentPosition.latitude, longitude: currentPosition.longitude }, { latitude: latitude, longitude: longitude }) / 1000;
     distance = distance.toFixed(1);
     console.log('My DISTANCE is', distance);
@@ -107,7 +108,6 @@ export default function SearchScreen() {
       </View >
 
     setSelectedOutletID(infoCard);
-    console.log('My outlet ID is', outletID)
 
   };
 
@@ -116,7 +116,7 @@ export default function SearchScreen() {
 
   if (importPlaces) {
     markers = importPlaces.map((data, i) => {
-      return <Marker key={i} coordinate={{ latitude: data.latitude, longitude: data.longitude }} title={data.type} pinColor='#0FCCA7' onPress={() => { displayCard(data.latitude, data.longitude, data.price, data.address, data.type) }} />
+      return <Marker key={i} coordinate={{ latitude: data.latitude, longitude: data.longitude }} title={data.type} pinColor='#0FCCA7' onPress={() => { displayCard(data.latitude, data.longitude, data.price, data.address, data.type, data._id) }} />
     });
   }
 
