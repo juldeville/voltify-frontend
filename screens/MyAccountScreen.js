@@ -87,6 +87,7 @@ const styles = StyleSheet.create({
         fontWeight: '600',
         marginTop:-20,
         textAlign: 'center',
+        fontFamily: 'Roboto-Black'
        
 
     },

@@ -22,6 +22,7 @@ import PaymentScreen from './screens/PaymentScreen';
 import SearchScreen from './screens/SearchScreen';
 import SelectOutletScreen from './screens/SelectOutletScreen';
 import StartChargingScreen from './screens/StartChargingScreen';
+import { useFonts } from 'expo-font';
 
 
 
@@ -62,7 +63,7 @@ const TabNavigator = () => {
       tabBarIcon: ({ color, size }) => {
         let iconName = '';
 
-        if (route.name === 'SearchScreen') {
+        if (route.name === 'Search') {
           iconName = 'search'
         } else if (route.name === "DevScreen") {
           iconName = 'calendar'
@@ -80,7 +81,7 @@ const TabNavigator = () => {
       // tabBarInactiveTintColor: '#335561',
       headerShown: false,
     })}>
-      <Tab.Screen name="SearchScreen" component={SearchScreen} />
+      <Tab.Screen name="Search" component={SearchScreen} />
       <Tab.Screen name="DevScreen" component={DevScreen} />
       <Tab.Screen name="RecentTransaction" component={RecentTransactionScreen} />
       <Tab.Screen name="MyOutlet" component={MyOutletScreen} />
@@ -91,6 +92,16 @@ const TabNavigator = () => {
 };
 
 export default function App() {
+  const [loaded] = useFonts({
+    'Roboto-Black': require('./assets/fonts/Roboto-Black.ttf'),
+    'Roboto-BlackItalic': require('./assets/fonts/Roboto-BlackItalic.ttf'),
+
+  });
+
+  if (!loaded) {
+    return null;
+  }
+
   return (
     <Provider store={store}>
       <PersistGate persistor={persistor}>

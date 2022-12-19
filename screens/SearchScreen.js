@@ -8,8 +8,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import * as geolib from 'geolib';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 
-
-
 export default function SearchScreen() {
   const dispatch = useDispatch()
   const outlet = useSelector((state) => state.outlet.value);
@@ -21,9 +19,6 @@ export default function SearchScreen() {
   const [importPlaces, setImportPlaces] = useState();
   const [outletID, setOutletID] = useState();
   const [selectedOutletID, setSelectedOutletID] = useState();
-
-
-
 
   useEffect(() => {
     (async () => {
@@ -41,13 +36,8 @@ export default function SearchScreen() {
       .then((response) => response.json())
       .then((data) => {
         data.result && setImportPlaces(data.data);
-
-        console.log('reception', data);
-
       });
-
   }, []);
-
 
   console.log('my currentposition is', currentPosition);
 
@@ -66,13 +56,10 @@ export default function SearchScreen() {
 
         setSearchedPlace({ latitude: updatedOutletLatitude, longitude: updatedOutletLongitude, latitudeDelta: 0.05, longitudeDelta: 0.05 })
 
-
       })
   };
 
-
   console.log('searchedplace is', searchedPlace)
-
 
   const handleClose = () => {
     setModalVisible(false);
@@ -96,7 +83,8 @@ export default function SearchScreen() {
 
           <View style={styles.outletType}>
             <FontAwesome name="plug" />
-            <Text style={styles.textCard}> {type}</Text>
+            <Text style={{fontWeight:"600", fontSize:15, color: 'black'}}> {type}</Text>
+            <FontAwesome name='times-circle' color='black'  style={{fontSize: 20, marginLeft: 20}} onPress={() => setSelectedOutletID()}/>
           </View>
 
         </View>
@@ -114,30 +102,14 @@ export default function SearchScreen() {
           <TouchableOpacity onPress={() => handleNewPlace()} style={styles.buttonCard2} activeOpacity={0.8}>
             <Text style={styles.textButton}>Start charging</Text>
           </TouchableOpacity>
-
-
-
-
         </View>
-
-
-
-
 
       </View >
 
     setSelectedOutletID(infoCard);
-
     console.log('My outlet ID is', outletID)
 
   };
-
-
-
-
-
-  console.log('Import places is', importPlaces);
-
 
   //Display Markers
   let markers
@@ -150,7 +122,6 @@ export default function SearchScreen() {
 
   console.log('MY CURRENT POSITION IS', currentPosition)
 
-
   return (
     <View style={styles.container}>
 
@@ -160,16 +131,10 @@ export default function SearchScreen() {
           <Text style={styles.textButton}>Search</Text>
         </TouchableOpacity>
       </View>
-
       {selectedOutletID}
-
-
-      <MapView style={styles.map} region={searchedPlace ? searchedPlace : currentPosition} onPress={() => { Keyboard.dismiss(), setSelectedOutletID() }}>
+      <MapView style={styles.map} region={searchedPlace ? searchedPlace : currentPosition} /* onPress={() => { Keyboard.dismiss(), setSelectedOutletID() }} */>
         {currentPosition && <Marker coordinate={currentPosition} title="My position" pinColor="black" />}
         {markers}
-
-
-
       </MapView>
     </View>
   );
@@ -178,14 +143,11 @@ export default function SearchScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-
-
   },
 
   map: {
     flex: 1,
   },
-
 
   modalView: {
     flexDirection: 'row',
@@ -252,6 +214,8 @@ const styles = StyleSheet.create({
   outletType: {
     flexDirection: 'row',
     alignItems: 'center',
+    width: 120,
+    justifyContent: 'space-between'
   },
 
   input: {

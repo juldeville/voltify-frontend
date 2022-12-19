@@ -1,7 +1,8 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View, Button, TouchableOpacity, KeyboardAvoidingView } from 'react-native';
+
+import { StyleSheet, Text, View, Button, TouchableOpacity, KeyboardAvoidingView, requireNativeComponent } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+
 
 
 const Stack = createNativeStackNavigator();
@@ -51,7 +52,7 @@ const styles = StyleSheet.create({
     width: '80%',
     fontSize: 38,
     fontWeight: '600',
-    fontFamily: 'Roboto',
+    fontFamily: 'Roboto-Black',
     fontWeight: 'bold',
     textAlign: 'center',
     marginTop: 30,

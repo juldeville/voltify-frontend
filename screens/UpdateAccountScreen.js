@@ -95,7 +95,7 @@ export default function SigninScreen({ navigation }) {
             <TouchableOpacity onPress={() => handleUpdate()} style={styles.button} activeOpacity={0.8}>
                 <Text style={styles.textButton}>Submit</Text>
             </TouchableOpacity>
-            <TouchableOpacity onPress={() => navigation.navigate('HomeScreen')} style={styles.buttonTwo} activeOpacity={0.8}>
+            <TouchableOpacity onPress={() => navigation.navigate('MyAccountScreen')} style={styles.buttonTwo} activeOpacity={0.8}>
                 <Text style={styles.textButton}>Back</Text>
             </TouchableOpacity>
 

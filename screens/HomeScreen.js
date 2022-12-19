@@ -7,11 +7,16 @@ import {
     Text,
     TouchableOpacity,
 } from 'react-native';
+import AppLoader from './AppLoader';
+import { useLogin } from '../context/LoginProvider';
 
 export default function HomeScreen({ navigation }) {
 
+    /* const {loginPending} = useLogin() */
+
 
     return (
+        <>
         <KeyboardAvoidingView style={styles.container} behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
 
             <Text style={styles.title}>Welcome to</Text>
@@ -31,8 +36,13 @@ export default function HomeScreen({ navigation }) {
             <TouchableOpacity onPress={() => navigation.navigate('ChoiceScreen')} style={styles.buttonTwo} activeOpacity={0.8}>
                 <Text style={styles.textButton}>Choice</Text>
             </TouchableOpacity>
-
+            
         </KeyboardAvoidingView>
+        
+        {/* <AppLoader/> */}
+        </>
+        
+        
     )
 }
 
@@ -60,7 +70,7 @@ const styles = StyleSheet.create({
         width: '80%',
         fontSize: 38,
         fontWeight: '600',
-        fontFamily: 'Roboto',
+        fontFamily: 'Roboto-Black',
         fontWeight: 'bold',
         textAlign: 'center',
         marginTop: 30,
