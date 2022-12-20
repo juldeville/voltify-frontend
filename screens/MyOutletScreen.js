@@ -7,7 +7,7 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome';
 
 
 
-export default function MyOutletScreen() {
+export default function MyOutletScreen({ navigation }) {
 
   const user = useSelector((state) => state.user.value);
   const [outletLatitude, setOutletLatitude] = useState()
@@ -18,6 +18,9 @@ export default function MyOutletScreen() {
   const [type, setType] = useState(null);
   const [price, setPrice] = useState(null);
   const [averageVote, setAverageVote] = useState(null);
+  const [outletVote, setOutletVote] = useState(null);
+  const [updatePage, setUpdatePage] = useState(null);
+
 
   console.log('token is', user.token)
 
@@ -25,34 +28,39 @@ export default function MyOutletScreen() {
     fetch(`https://voltify-backend.vercel.app/outlets/displayUserOutlet/${user.token}`)
       .then(response => response.json())
       .then(data => {
-        console.log('UseEffect data', data)
-        setOutletLatitude(data.outlet.latitude);
-        setOutletLongitude(data.outlet.longitude);
-        setAddress(data.outlet.address);
-        setType(data.outlet.type);
-        setPrice(data.outlet.price)
-
-        console.log('VOTES', data.outlet.votes)
-
-        if (data) {
+        if (data.result) {
+          console.log('UseEffect data', data)
+          setOutletLatitude(data.outlet.latitude);
+          setOutletLongitude(data.outlet.longitude);
+          setAddress(data.outlet.address);
+          setType(data.outlet.type);
+          setPrice(data.outlet.price)
           setValidOutlet(true);
+          setOutletVote(data.outlet.votes)
+
+
         }
 
-        let voteInfo = data.outlet.votes;
-
-        console.log(voteInfo.length)
 
 
-        if (voteInfo.length > 0) {
-          let voteFinal = voteInfo.reduce((a, b) => a + b, 0) / voteInfo.length;
-          voteFinal = voteFinal.toFixed(1);
-          setAverageVote(voteFinal);
-        }
-        else {
-          setAverageVote('No reviews yet')
-        }
       });
   }, []);
+
+  console.log('VALUE OF OUTLETVOTE IS...', outletVote)
+
+  let voteFinal;
+  if (outletVote) {
+    voteFinal = outletVote.reduce((a, b) => a + b, 0) / outletVote.length;
+    voteFinal = voteFinal.toFixed(1);
+
+  }
+
+  else {
+    console.log('No reviews yet')
+  }
+
+
+  console.log('Value of validOutlet...', validOutlet)
 
   const currentPosition = {
     latitude: outletLatitude,
@@ -63,9 +71,28 @@ export default function MyOutletScreen() {
 
 
   if (!validOutlet) {
-    return (<View style={styles.container}>
-      <Text>You currently have no outlet, please contact support at maximeGomez@laposte.fr</Text>
+    return (<View style={styles.subContainer}>
+      <Text>You currently have no outlet.</Text>
+
+      <TouchableOpacity onPress={() => navigation.navigate('AddOutletScreen')} style={styles.button} activeOpacity={0.8}>
+        <Text style={styles.textButton}>Add an outlet</Text>
+      </TouchableOpacity>
     </View>)
+  }
+
+  const handleDelete = () => {
+    console.log("YOUR TOKEN IS", user.token)
+    fetch(`https://voltify-backend.vercel.app/outlets/deleteOutlet`, {
+      method: 'DELETE',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ token: user.token }),
+    })
+
+      .then(response => response.json())
+      .then(data => {
+        console.log('DELETION CONFIRMED', data);
+        setValidOutlet(false)
+      });
   }
 
   return (
@@ -83,13 +110,10 @@ export default function MyOutletScreen() {
           <View style={styles.rightBox}>
             <Text><FontAwesome name="plug" /> {type}</Text>
             <Text>{price} €/min</Text>
-            <Text><FontAwesome name="star" /> {averageVote}</Text>
+            <Text><FontAwesome name="star" /> {voteFinal}</Text>
           </View>
         </View>
-        <TouchableOpacity style={styles.button}>
-          <Text style={{ color: 'white' }}>Add outlet</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.button2}>
+        <TouchableOpacity onPress={() => handleDelete()} style={styles.button2}>
           <Text style={{ color: 'white' }}> Delete </Text>
         </TouchableOpacity>
       </View>
@@ -103,6 +127,14 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     justifyContent: 'center',
   },
+
+  subContainer: {
+    flex: 1,
+    backgroundColor: '#fff',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+
   map: {
     flex: 1,
   },
@@ -152,12 +184,30 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     marginBottom: 10,
   },
+
   textWrap: {
     flexDirection: 'row',
     justifyContent: 'space-around',
     width: "100%",
     alignItems: 'center',
-  }
+  },
+
+  button: {
+    alignItems: 'center',
+    paddingTop: 8,
+    width: '80%',
+    marginTop: 30,
+    backgroundColor: '#0FCCA7',
+    borderRadius: 10,
+    marginBottom: 0,
+  },
+
+  textButton: {
+    color: '#ffffff',
+    height: 30,
+    fontWeight: '600',
+    fontSize: 16,
+  },
 
 });
 

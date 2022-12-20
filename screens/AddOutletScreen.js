@@ -62,7 +62,7 @@ export default function AddOutletScreen({ navigation }) {
                     .then(data => {
                         if (data.result) {
                             console.log('Great succes!');
-                            navigation.navigate('SearchScreen');
+                            navigation.navigate('MyOutletScreen');
 
 
                         } else {

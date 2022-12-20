@@ -114,7 +114,7 @@ export default function App() {
             <Stack.Screen name="AddOutletScreen" component={AddOutletScreen} />
             <Stack.Screen name="UpdateAccountScreen" component={UpdateAccountScreen} />
             <Stack.Screen name="SigninScreen" component={SigninScreen} />
-            <Stack.Screen name="DevScreen" component={DevScreen}/>
+            <Stack.Screen name="DevScreen" component={DevScreen} />
             <Stack.Screen name="SignupScreen" component={SignupScreen} />
             <Stack.Screen name="ChoiceScreen" component={ChoiceScreen} />
             <Stack.Screen name="SearchScreen" component={TabNavigator} />
@@ -123,6 +123,7 @@ export default function App() {
             <Stack.Screen name="FinishedChargingScreen" component={FinishedChargingScreen} />
             <Stack.Screen name="ChargingScreen" component={ChargingScreen} />
             <Stack.Screen name="CheckoutScreen" component={CheckoutScreen} />
+            <Stack.Screen name="MyOutletScreen" component={MyOutletScreen} />
           </Stack.Navigator>
         </NavigationContainer>
       </PersistGate>
