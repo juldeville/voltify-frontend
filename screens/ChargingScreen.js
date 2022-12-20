@@ -1,11 +1,12 @@
 import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import { useState, useEffect, useRef } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import CountUp from 'react-countup';
 
 
 export default function StartChargingScreen({navigation}) {
     
-   const [count, setCount] = useState(0);
+  /* const [count, setCount] = useState(0);
    const [stop, setStop] = useState(0);
    const [price, setPrice] = useState(0);
   const savedCallback = useRef();
@@ -26,6 +27,8 @@ export default function StartChargingScreen({navigation}) {
     let id = setInterval(tick, 1000);
     return () => clearInterval(id);
   }, []);
+
+
 
  /*   // Post transaction: à terminer
     const handleTransaction = () => {
@@ -48,14 +51,45 @@ export default function StartChargingScreen({navigation}) {
       });
   }, []);
 */
+const [time, setTime] = useState(0);
+const dispatch = useDispatch()
+
+useEffect(() => {
+  const timer = setInterval(() => {
+    setTime((prevTime) => prevTime + 1000);
+  }, 1000);
+  return () => {
+    clearInterval(timer);
+  };
+}, []);
+
+const makeTimeReadable = (t) => {
+  const timeInSec = t / 1000;
+  // console.log(timeInSec);
+  const hours = Math.floor(timeInSec / 3600);
+  const mins = Math.floor((timeInSec - hours * 3600) / 60);
+
+  const secs = timeInSec - hours * 3600 - mins * 60;
+  // console.log(hours, mins, secs, "mins");
+  return `${checkTwoDigits(hours)}:${checkTwoDigits(mins)}:${checkTwoDigits(
+    secs
+  )}`;
+};
+
+const checkTwoDigits = (t) => {
+  if (t < 10) {
+    return "0" + t;
+  }
+  return t;
+};
 
  return (
    <View style={styles.container}>
     <Text style={styles.title} >You are charging</Text>
     <Text style={styles.text}>You have been charging for </Text>
-    <Text style={styles.textone}>{count}sec</Text>
+    <Text style={styles.textone}>Time: {makeTimeReadable(time)}</Text>
     <TouchableOpacity onPress={() => navigation.navigate('CheckoutScreen')}  style={styles.button} activeOpacity={0.8}>
-      <Text style={styles.textButton}>Checkout</Text>
+      <Text style={styles.textButton} >Checkout</Text>
     
     </TouchableOpacity>
    </View>
