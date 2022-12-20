@@ -49,7 +49,7 @@ export default function MyOutletScreen({ navigation }) {
   console.log('VALUE OF OUTLETVOTE IS...', outletVote)
 
   let voteFinal;
-  if (outletVote) {
+  if (!outletVote === []) {
     voteFinal = outletVote.reduce((a, b) => a + b, 0) / outletVote.length;
     voteFinal = voteFinal.toFixed(1);
 
@@ -57,7 +57,9 @@ export default function MyOutletScreen({ navigation }) {
 
   else {
     console.log('No reviews yet')
+    voteFinal = 'No reviews yet'
   }
+  console.log('Value of voteFinal...', voteFinal)
 
 
   console.log('Value of validOutlet...', validOutlet)
