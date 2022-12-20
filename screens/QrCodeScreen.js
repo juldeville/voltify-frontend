@@ -4,7 +4,7 @@ import { Camera, CameraType, FlashMode } from 'expo-camera';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import { useIsFocused } from '@react-navigation/native';
 
-export default function QrCodeScreen() {
+export default function QrCodeScreen({ navigation }) {
 
   const isFocused = useIsFocused()
   const [hasPermission, setHasPermission] = useState(false);
@@ -21,11 +21,11 @@ export default function QrCodeScreen() {
   }, []);
 
   const takePicture = async () => {
-    const photo = await cameraRef.takePictureAsync({quality: 0.3});
+    const photo = await cameraRef.takePictureAsync({ quality: 0.3 });
     console.log(photo);
   }
 
-  if(!hasPermission || !isFocused) {
+  if (!hasPermission || !isFocused) {
     return <View></View>
   }
 
@@ -40,11 +40,11 @@ export default function QrCodeScreen() {
         </TouchableOpacity>
       </View>
       <View style={styles.snapContainer}>
-        <TouchableOpacity onPress={() => cameraRef && takePicture()}>
+        <TouchableOpacity onPress={() => { cameraRef && takePicture(); navigation.navigate('ChargingScreen') }}>
           <FontAwesome name='circle-thin' size={95} color='#ffffff' />
         </TouchableOpacity>
       </View>
-    </Camera>
+    </Camera >
   )
 
 }
