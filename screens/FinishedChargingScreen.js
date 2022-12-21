@@ -25,7 +25,7 @@ export default function FinishedChargingScreen({navigation}) {
       .then(data =>{
         console.log(data)
         if(data.result == true){
-          navigation.navigate('HomeScreen'); 
+          navigation.navigate('MyAccountScreen'); 
         }else{
           alert("outlet not found")
         }
