@@ -1,8 +1,8 @@
 import { StyleSheet, Text, View, TouchableOpacity, Button } from 'react-native';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useSelector } from 'react-redux';
-import { Rating } from 'react-simple-star-rating'
+
 
 
 export default function FinishedChargingScreen({ navigation }) {
@@ -14,9 +14,6 @@ export default function FinishedChargingScreen({ navigation }) {
   console.log("TRANSACTION ID IN FINISHED", transaction.id);
   console.log("TRANSACTION DURATION IN FINISHED", transaction.duration);
 
-  let totalPrice =
-
-  // attente de outlet.id
 
   const [personalNote, setPersonalNote] = useState(0);
 
@@ -77,6 +74,7 @@ const styles = StyleSheet.create({
   title: {
     width: '80%',
     fontSize: 38,
+    fontFamily: 'Roboto-Black',
     fontWeight: '600',
     marginTop: -100,
     textAlign: 'center',

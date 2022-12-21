@@ -61,7 +61,7 @@ export default function SearchScreen({ navigation }) {
 
 
 
-  //Dicplay data in a Card
+  //Display data in a Card
   let infoCard;
   let distance;
   const displayCard = (latitude, longitude, price, address, type, outletId, votes) => {
