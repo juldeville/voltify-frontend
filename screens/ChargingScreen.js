@@ -41,7 +41,7 @@ export default function ChargingScreen({ navigation }) {
     }).then(response => response.json())
       .then(data => {
         if (data.result) {
-          console.log('Great succes!');
+          console.log('Great succes!', data);
 
 
         } else {
