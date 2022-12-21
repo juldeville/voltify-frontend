@@ -1,6 +1,5 @@
 
-import { StyleSheet, Text, View, Button, TouchableOpacity, KeyboardAvoidingView, requireNativeComponent } from 'react-native';
-import { NavigationContainer } from '@react-navigation/native';
+import { StyleSheet, Text, TouchableOpacity, KeyboardAvoidingView} from 'react-native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 
@@ -19,7 +18,7 @@ export default function ChoiceScreen({ navigation }) {
       <Text style={styles.title}>What would you like to do?</Text>
 
       <TouchableOpacity onPress={() => navigation.navigate('SearchScreen')} style={styles.button} activeOpacity={0.8}>
-        <Text style={styles.textButton}>Locate charging outletssss</Text>
+        <Text style={styles.textButton}>Locate charging outlet</Text>
       </TouchableOpacity>
 
 
@@ -55,8 +54,8 @@ const styles = StyleSheet.create({
     fontFamily: 'Roboto-Black',
     fontWeight: 'bold',
     textAlign: 'center',
-    marginTop: 30,
-    marginBottom: 60,
+    marginTop: 0,
+    marginBottom: 100,
   },
 
   button: {
