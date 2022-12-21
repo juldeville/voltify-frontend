@@ -100,6 +100,7 @@ const styles = StyleSheet.create({
         fontWeight: '600',
         marginBottom: 50,
         marginTop: 100,
+        fontFamily: 'Roboto-Black',
         textAlign: 'center',
     },
 
