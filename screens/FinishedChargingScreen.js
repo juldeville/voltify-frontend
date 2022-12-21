@@ -13,12 +13,17 @@ export default function FinishedChargingScreen({ navigation }) {
 
   console.log("TRANSACTION ID IN FINISHED", transaction.id);
   console.log("TRANSACTION DURATION IN FINISHED", transaction.duration);
+  console.log("OUTLET PRICE IS", outlet.price);
 
-  let totalPrice =
+  let totalPrice = (outlet.price / 60) * transaction.duration;
+  totalPrice = totalPrice.toFixed(2);
+
+  console.log('TOTAL Price is...', totalPrice);
 
   // attente de outlet.id
 
   const [personalNote, setPersonalNote] = useState(0);
+
 
   const addVote = () => {
     console.log("vote:", personalNote)
@@ -53,7 +58,7 @@ export default function FinishedChargingScreen({ navigation }) {
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Charge finished</Text>
-      <Text style={styles.textone}>You recharged your vehicule for a total amount of 14.63€</Text>
+      <Text style={styles.textone}>You recharged your vehicule for a total amount of ${totalPrice}€</Text>
       <Text style={styles.texttow}>Rate your experience with this outlet:</Text>
       <View>
         <TouchableOpacity style={styles.star}>{personalStars}</TouchableOpacity>
