@@ -1,7 +1,8 @@
 import { useState } from 'react';
-import { StyleSheet, Text, TextInput, TouchableOpacity, View, KeyboardAvoidingView } from 'react-native';
+import { StyleSheet, Text, TextInput, TouchableOpacity, View, KeyboardAvoidingView, Pressable } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { signin } from "../reducers/user";
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
 
 export default function SigninScreen({ navigation }) {
     const dispatch = useDispatch();
@@ -9,6 +10,18 @@ export default function SigninScreen({ navigation }) {
 
     const [signInEmail, setSignInEmail] = useState('');
     const [signInPassword, setSignInPassword] = useState('');
+    const [passwordVisibility, setPasswordVisibility] = useState(true)
+    const [rightIcon, setRightIcon] = useState('eye')
+
+    const handlePasswordVisibility = () => {
+        if (rightIcon === 'eye') {
+            setRightIcon('eye-slash');
+            setPasswordVisibility(!passwordVisibility)
+        } else if (rightIcon === 'eye-slash') {
+            setRightIcon('eye');
+            setPasswordVisibility(!passwordVisibility);
+        }
+    }
 
     const handleConnection = () => {
         fetch('https://voltify-backend.vercel.app/users/signin', {
@@ -46,13 +59,17 @@ export default function SigninScreen({ navigation }) {
                 keyboardType="email-address"
                 textContentType="emailAddress"
                 onChangeText={(value) => { console.log(value); setSignInEmail(value) }} value={signInEmail} style={styles.input} />
+            <View style={styles.passwordContainer}>
+                <TextInput
+                    placeholder="Password"
+                    autoCapitalize="none"
+                    secureTextEntry={passwordVisibility}
 
-            <TextInput
-                placeholder="Password"
-                autoCapitalize="none"
-                secureTextEntry={true}
-
-                onChangeText={(value) => { console.log(value); setSignInPassword(value) }} value={signInPassword} style={styles.input} />
+                    onChangeText={(value) => { console.log(value); setSignInPassword(value) }} value={signInPassword} style={styles.input} />
+                <Pressable onPress={() => handlePasswordVisibility()}>
+                    <FontAwesome style={{paddingTop: 15, position: 'absolute' }} name={rightIcon} size={22} color="#232323"/>
+                </Pressable>
+            </View>
 
             <TouchableOpacity onPress={() => handleConnection()} style={styles.button} activeOpacity={0.8}>
                 <Text style={styles.textButton}>Sign in</Text>
@@ -76,10 +93,6 @@ const styles = StyleSheet.create({
         backgroundColor: '#ffffff',
         alignItems: 'center',
         justifyContent: 'center',
-    },
-    image: {
-        width: '100%',
-        height: '50%',
     },
     title: {
         width: '80%',
@@ -124,4 +137,8 @@ const styles = StyleSheet.create({
         fontWeight: '600',
         fontSize: 16,
     },
+
+    passwordContainer: {
+        flexDirection: 'row'
+    }
 });

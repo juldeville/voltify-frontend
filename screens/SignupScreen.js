@@ -10,8 +10,12 @@ import {
     TouchableOpacity,
     TextInput,
     ScrollView,
+    Pressable,
 } from 'react-native';
 import { signin } from '../reducers/user'
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
+
+
 export default function HomeScreen({ navigation }) {
     const dispatch = useDispatch()
 
@@ -20,60 +24,69 @@ export default function HomeScreen({ navigation }) {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('')
     const [address, setAddress] = useState('')
+    const [emailError, setEmailError] = useState(false)
+    const [passwordVisibility, setPasswordVisibility] = useState(true)
+    const [rightIcon, setRightIcon] = useState('eye')
 
-    /*    
-        set password visibility eye
-    
-        const [passwordVisibility, setPasswordVisibility] = useState(true)
-        const [rightIcon, setRightIcon] = useState('eye')
-    
-        const handlePasswordVisibility = () => {
-            if (rightIcon === 'eye') {
-                setRightIcon('eye-off');
-                setPasswordVisibility(!passwordVisibility)
-            } else if (rightIcon === 'eye-off') {
-                setRightIcon('eye');
-                setPasswordVisibility(!passwordVisibility)
-            }
+    const handlePasswordVisibility = () => {
+        if (rightIcon === 'eye') {
+            setRightIcon('eye-slash');
+            setPasswordVisibility(!passwordVisibility)
+        } else if (rightIcon === 'eye-slash') {
+            setRightIcon('eye');
+            setPasswordVisibility(!passwordVisibility);
         }
-     */
-    const handleSignUp = () => {
-        fetch('https://voltify-backend.vercel.app/users/signup', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ firstName: firstName, lastName: lastName, email: email, password: password, address: address }),
-        }).then(response => response.json())
-            .then(data => {
-                console.log('data', data)
-                if (data.result) {
-                    dispatch(signin({ token: data.token, email: data.email }))
-                    setFirstName('');
-                    setLastName('');
-                    setEmail('');
-                    setPassword('')
-                    setAddress('')
+    }
 
-                    navigation.navigate('ChoiceScreen')
-                }
-            })
+    const EMAIL_REGEX = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+
+
+    const handleSignUp = () => {
+        if (EMAIL_REGEX.test(email)) {
+            fetch('https://voltify-backend.vercel.app/users/signup', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ firstName: firstName, lastName: lastName, email: email, password: password, address: address }),
+            }).then(response => response.json())
+                .then(data => {
+                    console.log('data', data)
+                    if (data.result) {
+                        dispatch(signin({ token: data.token, email: data.email }))
+                        setFirstName('');
+                        setLastName('');
+                        setEmail('');
+                        setPassword('')
+                        setAddress('')
+    
+                        navigation.navigate('ChoiceScreen')
+                    }
+                })
+        } else {
+            setEmailError(true)
+        }
+
     }
 
     return (
         <KeyboardAvoidingView style={styles.container} behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
             <ScrollView style={styles.scrollView}>
-
                 <Text style={styles.title}>Who are you?</Text>
                 <TextInput placeholder="First Name" onChangeText={(value) => setFirstName(value)} value={firstName} style={styles.input} />
                 <TextInput placeholder="Last Name" onChangeText={(value) => setLastName(value)} value={lastName} style={styles.input} />
                 <TextInput placeholder="Email" onChangeText={(value) => setEmail(value)} value={email} style={styles.input} keyboardType="email-address" autoCapitalize='none' textContentType='emailaddress' />
+                {emailError && <Text style={{color:'red'}}>Invalid email address</Text>}
+                <View style={styles.searchSection}>
+                <TextInput placeholder="Password" onChangeText={(value) => setPassword(value)} value={password} style={styles.input} autoCorrect={false} autoCapitalize={'none'} secureTextEntry={passwordVisibility} />
+                <Pressable onPress={() => handlePasswordVisibility()}>
+                    <FontAwesome style={{paddingTop: 15, }} name={rightIcon} size={22} color="#232323"/>
+                </Pressable>
+                </View>
                 <TextInput placeholder="Address" onChangeText={(value) => setAddress(value)} value={address} style={styles.input} autoCorrect={false} autoCapitalize={'none'} />
-                <TextInput placeholder="Password" onChangeText={(value) => setPassword(value)} value={password} style={styles.input} autoCorrect={false} autoCapitalize={'none'} secureTextEntry={true} />
                 <TouchableOpacity onPress={() => handleSignUp()} style={styles.button} activeOpacity={0.8}>
                     <Text style={styles.textButton}>Next</Text>
                 </TouchableOpacity>
             </ScrollView >
         </KeyboardAvoidingView>
-
     )
 }
 
@@ -86,13 +99,9 @@ const styles = StyleSheet.create({
     },
 
     scrollView: {
-        width: '90%',
+        width: '85%',
     },
 
-    image: {
-        width: '100%',
-        height: '50%',
-    },
 
     title: {
         width: '80%',
@@ -123,20 +132,16 @@ const styles = StyleSheet.create({
         marginBottom: 40,
     },
 
-    buttonTwo: {
-        alignItems: 'center',
-        paddingTop: 8,
-        width: '80%',
-        marginTop: 20,
-        backgroundColor: '#020202',
-        borderRadius: 10,
-        marginBottom: 20,
-    },
-
     textButton: {
         color: '#ffffff',
         height: 30,
         fontWeight: '600',
         fontSize: 16,
     },
+
+    searchSection: {
+        flexDirection: 'row',
+     
+
+    }
 });
