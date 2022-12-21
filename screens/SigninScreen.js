@@ -79,10 +79,6 @@ export default function SigninScreen({ navigation }) {
                 <Text style={styles.textButton}>Back</Text>
             </TouchableOpacity>
 
-            <TouchableOpacity onPress={() => navigation.navigate('DevScreen')} style={styles.buttonTwo} activeOpacity={0.8}>
-                <Text style={styles.textButton}>Go to Dev hub</Text>
-            </TouchableOpacity>
-
         </KeyboardAvoidingView>
     )
 }

@@ -33,9 +33,7 @@ export default function HomeScreen({ navigation }) {
                     <Text style={styles.textButton}>Sign in</Text>
                 </TouchableOpacity>
 
-                <TouchableOpacity onPress={() => navigation.navigate('ChoiceScreen')} style={styles.buttonTwo} activeOpacity={0.8}>
-                    <Text style={styles.textButton}>Choice</Text>
-                </TouchableOpacity>
+
 
             </KeyboardAvoidingView>
 
