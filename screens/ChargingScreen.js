@@ -114,6 +114,7 @@ const styles = StyleSheet.create({
   title: {
     width: '80%',
     fontSize: 38,
+    fontFamily: 'Roboto-Black',
     fontWeight: '600',
     marginTop: 50,
     paddingBottom: 100,

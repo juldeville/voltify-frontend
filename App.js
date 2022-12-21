@@ -16,10 +16,10 @@ import FinishedChargingScreen from './screens/FinishedChargingScreen';
 import MyOutletScreen from './screens/MyOutletScreen';
 import QrCodeScreen from './screens/QrCodeScreen';
 import SearchScreen from './screens/SearchScreen';
-import SelectOutletScreen from './screens/SelectOutletScreen';
 import StartChargingScreen from './screens/StartChargingScreen';
 import ChargingScreen from './screens/ChargingScreen';
 import CheckoutScreen from './screens/CheckoutScreen';
+
 import { useFonts } from 'expo-font';
 
 
