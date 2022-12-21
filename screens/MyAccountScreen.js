@@ -1,12 +1,16 @@
 import { useState, useEffect } from 'react';
 import { StyleSheet, Text, TextInput, TouchableOpacity, View, KeyboardAvoidingView, Image } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
+import { signin } from "../reducers/user";
 import * as React from 'react';
 
 
 export default function MyAccountScreen({ navigation }) {
     const dispatch = useDispatch();
     const user = useSelector((state) => state.user.value);
+
+    const [signInEmail, setSignInEmail] = useState('');
+    const [signInPassword, setSignInPassword] = useState('');
 
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
@@ -89,6 +93,8 @@ const styles = StyleSheet.create({
     },
 
     avatar:{
+       
+        //   marginBottom:50,
             width: 120,
             height: 120,
             marginTop:30,
@@ -97,7 +103,10 @@ const styles = StyleSheet.create({
     },
 
     name:{
+        // width: '20%',
         fontSize: 25,
+        // fontWeight: '600',
+        // paddingBottom:150,
          textAlign: 'center',
          marginBottom:20,
         
@@ -105,8 +114,10 @@ const styles = StyleSheet.create({
     },
     
     total:{
-
+        // width: '20%',
         fontSize: 25,
+        // fontWeight: '600',
+        // paddingBottom:150,
         textAlign: 'center',
         
     },
