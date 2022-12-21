@@ -7,7 +7,8 @@ import * as React from 'react';
 export default function RecentTransactionScreen() {
 
 const user = useSelector((state) => state.user.value);
-const [userData, setUserData] = useState()
+const [userData, setUserData] = useState([])
+
 
 useEffect(() => {
   fetch (`https://voltify-backend.vercel.app/transactions/addTransaction/${user.token}`)
@@ -18,10 +19,26 @@ useEffect(() => {
   })
 }, [])
 
+console.log('UserData VALUE', userData)
+
+const transactions = userData.map((data, i) => {
+
+
+
+  return (
+    <View>
+      <Text>{data.price}</Text>
+      <Text>{data.date}</Text>
+      <Text>{data.duration}</Text>
+      <Text> Check-Out</Text>
+    </View>
+  )
+})
+
 
  return (
    <View style={styles.container}>
-     <Text>RecentTransactionScreen</Text>
+    {transactions}
    </View>
  );
 }
