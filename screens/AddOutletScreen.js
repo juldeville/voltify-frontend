@@ -1,9 +1,7 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { StyleSheet, Text, TextInput, TouchableOpacity, View, KeyboardAvoidingView, ScrollView, Button, showDatepicker, showTimepicker, date } from 'react-native';
-import { useDispatch, useSelector } from 'react-redux';
-import { signin } from "../reducers/user";
+import { useSelector } from 'react-redux';
 import { SelectList } from 'react-native-dropdown-select-list';
-import DateTimePicker from '@react-native-community/datetimepicker';
 
 
 
@@ -12,7 +10,6 @@ import DateTimePicker from '@react-native-community/datetimepicker';
 export default function AddOutletScreen({ navigation }) {
 
     //Start of WeekDayPicker
-    const dispatch = useDispatch();
     const user = useSelector((state) => state.user.value);
 
     const data = [
@@ -25,7 +22,6 @@ export default function AddOutletScreen({ navigation }) {
     const [outletAddress, setOutletAddress] = useState('');
     const [outletType, setOutletType] = useState('');
     const [outletPrice, setOutletPrice] = useState('');
-    const [outletAvailability, setOutletAvailibitlity] = useState(true);
 
 
     const handleAddOutlet = () => {
@@ -145,6 +141,7 @@ const styles = StyleSheet.create({
     title: {
         width: '100%',
         fontSize: 38,
+        fontFamily: 'Roboto-Black',
         fontWeight: '600',
         marginBottom: 50,
         marginTop: 100,

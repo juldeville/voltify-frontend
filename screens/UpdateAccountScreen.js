@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { StyleSheet, Text, TextInput, TouchableOpacity, View, KeyboardAvoidingView, Modal } from 'react-native';
+import { StyleSheet, Text, TextInput, TouchableOpacity, View, KeyboardAvoidingView, Modal, ScrollView } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import { signin, updateEmail } from "../reducers/user";
 
@@ -73,6 +73,7 @@ export default function SigninScreen({ navigation }) {
 
     return (
         <KeyboardAvoidingView style={styles.container} behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
+            
             <Text style={styles.title}>Account</Text>
             <Modal visible={modalVisible} animationType="fade" transparent stume>
                 <KeyboardAvoidingView style={styles.container1} behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
@@ -88,14 +89,15 @@ export default function SigninScreen({ navigation }) {
                             </TouchableOpacity>
                         </View>
                     </View>
+
                 </KeyboardAvoidingView>
             </Modal>
 
-            <View style={{ width: "100%", flexDirection: 'row', justifyContent: 'center', alignItems: 'center', position: 'relative' }}>
+            <View style={styles.view}>
                 <TextInput
                     placeholder="Password"
                     secureTextEntry={true} editable={false} value='thisisafake' style={styles.inputWithButton} />
-                <TouchableOpacity title="Modify password" style={styles.buttonInput} onPress={() => handleModifyPassword()}><Text style={{ color: "blue" }}>Modify Password</Text></TouchableOpacity>
+                <TouchableOpacity title="Modify password" style={styles.buttonInput} onPress={() => handleModifyPassword()}><Text style={styles.modify}>Modify Password</Text></TouchableOpacity>
             </View>
 
             <TextInput
@@ -115,7 +117,7 @@ export default function SigninScreen({ navigation }) {
             <TouchableOpacity onPress={() => navigation.navigate('HomeScreen')} style={styles.buttonTwo} activeOpacity={0.8}>
                 <Text style={styles.textButton}>Back</Text>
             </TouchableOpacity>
-
+           
         </KeyboardAvoidingView>
     )
 }
@@ -133,6 +135,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
     },
+
     image: {
         width: '100%',
         height: '50%',
@@ -142,6 +145,17 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
 
+    },
+    modify:{
+        color:'blue',
+    },
+
+    view:{
+        width: "100%",
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center',
+        position: 'relative',
     },
 
     modalView: {
@@ -164,8 +178,10 @@ const styles = StyleSheet.create({
     title: {
         width: '80%',
         fontSize: 38,
+        fontFamily: 'Roboto-Black',
         fontWeight: '600',
         marginBottom: 50,
+        paddingTop: 150,
         textAlign: 'center',
     },
     inputWithButton: {
@@ -204,7 +220,7 @@ const styles = StyleSheet.create({
         marginTop: 30,
         backgroundColor: '#0FCCA7',
         borderRadius: 10,
-        marginTop: 50,
+        marginTop: 0,
         marginBottom: 0,
     },
     buttonModal: {
@@ -236,7 +252,7 @@ const styles = StyleSheet.create({
         marginTop: 20,
         backgroundColor: '#020202',
         borderRadius: 10,
-        marginBottom: 20,
+        marginBottom: 160,
     },
 
     textButton: {

@@ -86,6 +86,7 @@ const styles = StyleSheet.create({
         fontSize: 38,
         fontWeight: '600',
         marginBottom: 50,
+        fontFamily: 'Roboto-Black',
         textAlign: 'center',
     },
     input: {
