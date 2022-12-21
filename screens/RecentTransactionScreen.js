@@ -13,8 +13,8 @@ useEffect(() => {
   fetch (`https://voltify-backend.vercel.app/transactions/addTransaction/${user.token}`)
   .then(response => response.json())
   .then(data => {
-    console.log('azefffffffffazefazefazefazef', data);
-    setUserData(data)
+    console.log('azefffffffffazefazefazefazef', data.outlet);
+    setUserData(data.outlet)
   })
 }, [])
 
