@@ -1,11 +1,13 @@
 import { useState, useEffect } from 'react';
 import { StyleSheet, Text, TextInput, TouchableOpacity, View, KeyboardAvoidingView, Image } from 'react-native';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import * as React from 'react';
 
 
 export default function MyAccountScreen({ navigation }) {
+    const dispatch = useDispatch();
     const user = useSelector((state) => state.user.value);
+
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
     
@@ -103,6 +105,7 @@ const styles = StyleSheet.create({
     },
     
     total:{
+
         fontSize: 25,
         textAlign: 'center',
         
