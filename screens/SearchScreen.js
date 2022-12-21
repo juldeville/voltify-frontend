@@ -77,7 +77,7 @@ export default function SearchScreen({ navigation }) {
 
 
 
-    dispatch(registerOutlet({ id: outletId }));
+    dispatch(registerOutlet({ id: outletId, price: price }));
     distance = geolib.getDistance({ latitude: currentPosition.latitude, longitude: currentPosition.longitude }, { latitude: latitude, longitude: longitude }) / 1000;
     distance = distance.toFixed(1);
     let averageVote = votes.reduce((a, b) => a + b, 0) / votes.length;

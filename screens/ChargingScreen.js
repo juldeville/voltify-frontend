@@ -2,27 +2,74 @@ import { StyleSheet, Text, View, TouchableOpacity, SafeAreaView, TouchableHighli
 import { useState, useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Stopwatch } from 'react-native-stopwatch-timer';
+import user from '../reducers/user';
 
 
 
-export default function StartChargingScreen({ navigation }) {
+export default function ChargingScreen({ navigation }) {
+
+  const outlet = useSelector((state) => state.outlet.value);
+  const user = useSelector((state) => state.user.value);
+
+
 
   const [isTimerStart, setIsTimerStart] = useState(false);
   const [isStopwatchStart, setIsStopwatchStart] = useState(false);
   const [timerDuration, setTimerDuration] = useState(90000);
   const [resetTimer, setResetTimer] = useState(false);
   const [resetStopwatch, setResetStopwatch] = useState(false);
+  const [finalTime, setFinalTime] = useState(0);
+
+
+  console.log('USER TOKEN IS...', user.token);
+  console.log('FINAL TIME IS...', finalTime);
+  console.log('OUTLET ID IS...', outlet.id);
+  console.log('OUTLET PRICE IS...', outlet.price);
+
+  const handlePress = () => {
+
+    fetch('https://voltify-backend.vercel.app/transactions/addTransaction/', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        token: user.token,
+        id: outlet.id,
+        duration: finalTime,
+        price: outlet.price,
+        date: new Date(),
+      }),
+    }).then(response => response.json())
+      .then(data => {
+        if (data.result) {
+          console.log('Great succes!');
+
+
+        } else {
+          console.log('You fail!')
+        }
+      });
+  }
+
+
+
+
 
   return (
     <SafeAreaView style={styles.container}>
+
+      <Text style={styles.title}>Start charging now</Text>
+      <Text style={styles.text}>You have been chargin for:</Text>
+
+
       <View style={styles.watch}>
+
         <Stopwatch
           laps
           msecs
           start={isStopwatchStart}
           reset={resetStopwatch}
-          getTime={(time) => {
-            console.log(time);
+          getMsecs={(time) => {
+            setFinalTime(time / 1000);
           }}
         />
 
@@ -41,7 +88,7 @@ export default function StartChargingScreen({ navigation }) {
       </View>
 
 
-      <TouchableOpacity onPress={() => navigation.navigate('CheckoutScreen')} style={styles.buttonTwo} activeOpacity={0.8}>
+      <TouchableOpacity onPress={() => { navigation.navigate('CheckoutScreen'); handlePress() }} style={styles.buttonTwo} activeOpacity={0.8}>
         <Text style={styles.textButton}>Checkout</Text>
       </TouchableOpacity>
 
@@ -58,15 +105,13 @@ const styles = StyleSheet.create({
   },
 
   watch: {
-    marginTop: 100,
   },
 
   title: {
     width: '80%',
     fontSize: 38,
     fontWeight: '600',
-    // marginTop:-150,
-    // marginBottom: 200,
+    marginTop: 50,
     paddingBottom: 100,
     textAlign: 'center',
   },
