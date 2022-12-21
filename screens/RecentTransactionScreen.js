@@ -15,22 +15,31 @@ useEffect(() => {
   .then(response => response.json())
   .then(data => {
     console.log('azefffffffffazefazefazefazef', data.outlet);
+    
     setUserData(data.outlet)
   })
 }, [])
 
-console.log('UserData VALUE', userData)
+console.log('UserData VALUZZZE', userData)
+
 
 const transactions = userData.map((data, i) => {
-
-
-
+const dateObj = new Date(data.date)
+const withoutTime = data.date.split('T')
+const hour = dateObj.getUTCHours()
+const minute = dateObj.getUTCMinutes()
+const minutes = Math.ceil(data.duration/60)
+console.log(hour, minute)
   return (
-    <View>
-      <Text>{data.price}</Text>
-      <Text>{data.date}</Text>
-      <Text>{data.duration}</Text>
-      <Text> Check-Out</Text>
+    <View key = {i} style={styles.infoCard}>
+      <View >
+      <Text><Text style={{fontWeight:"600"}}>Date: </Text>{withoutTime[0]}</Text>
+      <Text><Text style={{fontWeight:"600"}}>Time: </Text>{hour} : {minute}</Text>
+      <Text><Text style={{fontWeight:"600"}}>Duration: </Text>{minutes}</Text>
+      </View>
+      <View>
+      <Text>${data.price}</Text>
+      </View>
     </View>
   )
 })
@@ -38,6 +47,7 @@ const transactions = userData.map((data, i) => {
 
  return (
    <View style={styles.container}>
+    <Text style={styles.title}>Recent Transactions</Text>
     {transactions}
    </View>
  );
@@ -50,4 +60,25 @@ const styles = StyleSheet.create({
    alignItems: 'center',
    justifyContent: 'center',
  },
+ 
+ infoCard: {
+  flexDirection: 'row',
+  width: 300,
+  height: 100,
+  justifyContent: 'space-around',
+  alignItems: 'center',
+  margin: 20,
+  borderWidth: 1
+ },
+
+ title: {
+  width: '80%',
+  fontSize: 38,
+  fontWeight: '600',
+  paddingBottom: 50,
+  textAlign: 'center',
+  fontFamily: 'Roboto-Black'
+ 
+
+},
 });

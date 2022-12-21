@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
-import { StyleSheet, Text,  TouchableOpacity, KeyboardAvoidingView} from 'react-native';
+import { StyleSheet, Text, TextInput, TouchableOpacity, View, KeyboardAvoidingView, Image } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
+import { signin } from "../reducers/user";
 import * as React from 'react';
 
 
@@ -8,9 +9,20 @@ export default function MyAccountScreen({ navigation }) {
     const dispatch = useDispatch();
     const user = useSelector((state) => state.user.value);
 
+    const [signInEmail, setSignInEmail] = useState('');
+    const [signInPassword, setSignInPassword] = useState('');
+
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
     
+
+    /*const handleName = () => {
+        fetch('https://voltify-backend.vercel.app/users',)
+        .then(response => response.json())
+        .then(data => {
+        setName(data.FirstName);
+        })
+    }*/
 
       useEffect(() => {
         fetch(`https://voltify-backend.vercel.app/users/viewUser/${user.token}`)
@@ -42,7 +54,9 @@ export default function MyAccountScreen({ navigation }) {
         <KeyboardAvoidingView style={styles.container} behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
 
             <Text style={styles.title}>PROFILE</Text>
-           
+
+            <Image style={styles.avatar} size={24} source={require('../assets/photo.jpg')} />
+
             <Text style={styles.name}>{firstName} {lastName}</Text>
             <Text style={styles.total}>Amount earned: 139.81€</Text>
 
@@ -71,26 +85,39 @@ const styles = StyleSheet.create({
         width: '80%',
         fontSize: 38,
         fontWeight: '600',
-        marginTop:-150,
+        marginTop:-20,
         textAlign: 'center',
         fontFamily: 'Roboto-Black'
        
 
     },
 
+    avatar:{
+       
+        //   marginBottom:50,
+            width: 120,
+            height: 120,
+            marginTop:30,
+           
+           
+    },
 
     name:{
-         fontSize: 25,
+        // width: '20%',
+        fontSize: 25,
+        // fontWeight: '600',
+        // paddingBottom:150,
          textAlign: 'center',
          marginBottom:20,
-         marginTop:50,
         
        
     },
     
     total:{
-
+        // width: '20%',
         fontSize: 25,
+        // fontWeight: '600',
+        // paddingBottom:150,
         textAlign: 'center',
         
     },
@@ -121,7 +148,7 @@ const styles = StyleSheet.create({
         marginTop: 20,
         backgroundColor: '#EE1B42',
         borderRadius: 10,
-        marginBottom: -80,
+        marginBottom: 28,
         
     },
 
@@ -130,11 +157,6 @@ const styles = StyleSheet.create({
         height: 30,
         fontWeight: '600',
         fontSize: 16,
-    },
-
-    photo: {
-        color: 'white',
-        backgroundColor: 'black',
     },
 
  });

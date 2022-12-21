@@ -82,7 +82,6 @@ const TabNavigator = () => {
       headerShown: false,
     })}>
       <Tab.Screen name="Search" component={SearchScreen} />
-      <Tab.Screen name="DevScreen" component={DevScreen} />
       <Tab.Screen name="RecentTransaction" component={RecentTransactionScreen} />
       <Tab.Screen name="MyOutlet" component={MyOutletScreen} />
       <Tab.Screen name="MyAccount" component={MyAccountScreen} />
@@ -112,7 +111,6 @@ export default function App() {
             <Stack.Screen name="AddOutletScreen" component={AddOutletScreen} />
             <Stack.Screen name="UpdateAccountScreen" component={UpdateAccountScreen} />
             <Stack.Screen name="SigninScreen" component={SigninScreen} />
-            <Stack.Screen name="DevScreen" component={DevScreen} />
             <Stack.Screen name="SignupScreen" component={SignupScreen} />
             <Stack.Screen name="ChoiceScreen" component={ChoiceScreen} />
             <Stack.Screen name="SearchScreen" component={TabNavigator} />
