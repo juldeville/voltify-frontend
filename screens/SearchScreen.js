@@ -38,7 +38,6 @@ export default function SearchScreen({ navigation }) {
       });
   }, []);
 
-
   //Search a specific address.
   const handleNewPlace = () => {
 
@@ -58,9 +57,6 @@ export default function SearchScreen({ navigation }) {
       })
   };
 
-
-
-
   //Dicplay data in a Card
   let infoCard;
   let distance;
@@ -73,9 +69,6 @@ export default function SearchScreen({ navigation }) {
       ios: `${scheme}${label}@${latLng}`,
       android: `${scheme}${latLng}(${label})`
     });
-
-
-
 
     dispatch(registerOutlet({ id: outletId, price: price }));
     distance = geolib.getDistance({ latitude: currentPosition.latitude, longitude: currentPosition.longitude }, { latitude: latitude, longitude: longitude }) / 1000;
@@ -90,8 +83,6 @@ export default function SearchScreen({ navigation }) {
         <View style={styles.infoCardSub1}>
           <Text style={styles.textCard}>{distance} km from here</Text>
 
-
-
           <View style={styles.outletType}>
             <FontAwesome name="plug" />
             <Text style={{ fontWeight: "600", fontSize: 15, color: 'black' }}> {type}</Text>
@@ -105,12 +96,9 @@ export default function SearchScreen({ navigation }) {
           <View style={styles.infoCardSubDetails}>
             <Text style={styles.textCard}>{price}€/min</Text>
             <Text style={styles.textCard}><FontAwesome name="star" /> {averageVote}/5</Text>
-
-
+            
           </View>
         </View>
-
-
 
         <View style={styles.infoCardSub3}>
           <TouchableOpacity onPress={() => Linking.openURL(url)} style={styles.buttonCard} activeOpacity={0.8}>
@@ -135,12 +123,6 @@ export default function SearchScreen({ navigation }) {
       return <Marker key={i} coordinate={{ latitude: data.latitude, longitude: data.longitude }} title={data.type} pinColor='#0FCCA7' onPress={() => { displayCard(data.latitude, data.longitude, data.price, data.address, data.type, data._id, data.votes) }} />
     });
   }
-
-
-
-
-
-
 
   return (
     <View style={styles.container}>
