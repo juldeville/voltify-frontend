@@ -32,6 +32,8 @@ import { Provider } from 'react-redux';
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import user from './reducers/user';
 import outlet from './reducers/outlet';
+import transaction from './reducers/transaction';
+
 
 
 // redux-persist imports
@@ -39,7 +41,7 @@ import { persistStore, persistReducer } from 'redux-persist';
 import { PersistGate } from 'redux-persist/integration/react';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const reducers = combineReducers({ user, outlet });
+const reducers = combineReducers({ user, outlet, transaction });
 const persistConfig = {
   key: 'voltify',
   storage: AsyncStorage,

@@ -3,10 +3,12 @@ import { useState, useEffect, useRef } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Stopwatch } from 'react-native-stopwatch-timer';
 import user from '../reducers/user';
+import { registerTransaction } from '../reducers/transaction';
 
 
 
 export default function ChargingScreen({ navigation }) {
+  const dispatch = useDispatch()
 
   const outlet = useSelector((state) => state.outlet.value);
   const user = useSelector((state) => state.user.value);
@@ -41,7 +43,9 @@ export default function ChargingScreen({ navigation }) {
     }).then(response => response.json())
       .then(data => {
         if (data.result) {
-          console.log('Great succes!', data);
+          dispatch(registerTransaction({ id: data.transactionData._id }));
+          dispatch(registerTransaction({ duration: data.transactionData.duration }));
+
 
 
         } else {
