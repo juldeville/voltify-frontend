@@ -5,8 +5,6 @@ import { SelectList } from 'react-native-dropdown-select-list';
 
 
 
-
-
 export default function AddOutletScreen({ navigation }) {
 
     //Start of WeekDayPicker
@@ -58,7 +56,7 @@ export default function AddOutletScreen({ navigation }) {
                     .then(data => {
                         if (data.result) {
                             console.log('Great succes!');
-                            navigation.navigate('MyOutletScreen');
+                            navigation.navigate('SearchScreen', { screen: 'Search' });
 
 
                         } else {

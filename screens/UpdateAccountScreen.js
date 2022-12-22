@@ -35,7 +35,7 @@ export default function SigninScreen({ navigation }) {
             });
     }, []);
 
-    console.log('MYUSER', userInfo);
+    console.log('MYUSER', email);
 
 
     const handleUpdate = () => {
@@ -48,7 +48,7 @@ export default function SigninScreen({ navigation }) {
                 if (data.result) {
                     dispatch(updateEmail({ email: data.email }));
                     console.log('Great success!');
-                    navigation.navigate('HomeScreen')
+                    navigation.navigate('SearchScreen')
                 } else {
                     console.log('You fail!')
                 }
@@ -71,9 +71,13 @@ export default function SigninScreen({ navigation }) {
             })
     }
 
+    console.log('USER INFO EMAIL...', userInfo.email)
+    console.log('MY EMAIL IS...', email);
+
+
     return (
         <KeyboardAvoidingView style={styles.container} behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
-            
+
             <Text style={styles.title}>Account</Text>
             <Modal visible={modalVisible} animationType="fade" transparent stume>
                 <KeyboardAvoidingView style={styles.container1} behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
@@ -114,10 +118,10 @@ export default function SigninScreen({ navigation }) {
             <TouchableOpacity onPress={() => handleUpdate()} style={styles.button} activeOpacity={0.8}>
                 <Text style={styles.textButton}>Submit</Text>
             </TouchableOpacity>
-            <TouchableOpacity onPress={() => navigation.navigate('HomeScreen')} style={styles.buttonTwo} activeOpacity={0.8}>
+            <TouchableOpacity onPress={() => navigation.navigate('SearchScreen')} style={styles.buttonTwo} activeOpacity={0.8}>
                 <Text style={styles.textButton}>Back</Text>
             </TouchableOpacity>
-           
+
         </KeyboardAvoidingView>
     )
 }
@@ -146,11 +150,11 @@ const styles = StyleSheet.create({
         alignItems: 'center',
 
     },
-    modify:{
-        color:'blue',
+    modify: {
+        color: 'blue',
     },
 
-    view:{
+    view: {
         width: "100%",
         flexDirection: 'row',
         justifyContent: 'center',

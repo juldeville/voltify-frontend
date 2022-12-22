@@ -107,19 +107,17 @@ export default function App() {
         <NavigationContainer>
           <Stack.Navigator screenOptions={{ headerShown: false }}>
             <Stack.Screen name="HomeScreen" component={HomeScreen} />
-            <Stack.Screen name="MyAccountScreen" component={TabNavigator} />
             <Stack.Screen name="AddOutletScreen" component={AddOutletScreen} />
             <Stack.Screen name="UpdateAccountScreen" component={UpdateAccountScreen} />
             <Stack.Screen name="SigninScreen" component={SigninScreen} />
             <Stack.Screen name="SignupScreen" component={SignupScreen} />
             <Stack.Screen name="ChoiceScreen" component={ChoiceScreen} />
-            <Stack.Screen name="SearchScreen" component={TabNavigator} />
             <Stack.Screen name="StartChargingScreen" component={StartChargingScreen} />
             <Stack.Screen name="QrCodeScreen" component={QrCodeScreen} />
             <Stack.Screen name="FinishedChargingScreen" component={FinishedChargingScreen} />
             <Stack.Screen name="ChargingScreen" component={ChargingScreen} />
             <Stack.Screen name="CheckoutScreen" component={CheckoutScreen} />
-            <Stack.Screen name="MyOutletScreen" component={MyOutletScreen} />
+            <Stack.Screen name="SearchScreen" component={TabNavigator} />
           </Stack.Navigator>
         </NavigationContainer>
       </PersistGate>
