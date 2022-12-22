@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { StyleSheet, Text, TextInput, TouchableOpacity, View, KeyboardAvoidingView, Image } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 import * as React from 'react';
+import { useFocusEffect } from '@react-navigation/native';
 
 
 export default function RecentTransactionScreen() {
@@ -9,19 +10,15 @@ export default function RecentTransactionScreen() {
 const user = useSelector((state) => state.user.value);
 const [userData, setUserData] = useState([])
 
-
-useEffect(() => {
-  fetch (`https://voltify-backend.vercel.app/transactions/addTransaction/${user.token}`)
-  .then(response => response.json())
-  .then(data => {
-    console.log('azefffffffffazefazefazefazef', data.outlet);
-    
-    setUserData(data.outlet)
-  })
-}, [])
-
-console.log('UserData VALUZZZE', userData)
-
+useFocusEffect(
+  React.useCallback(() => {
+    fetch (`https://voltify-backend.vercel.app/transactions/addTransaction/${user.token}`)
+    .then(response => response.json())
+    .then(data => {
+      console.log('azefazefazefazef', data.outlet)
+      setUserData(data.outlet)
+    })
+  },[]))
 
 const transactions = userData.map((data, i) => {
 const dateObj = new Date(data.date)
