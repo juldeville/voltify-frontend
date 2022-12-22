@@ -37,7 +37,7 @@ export default function FinishedChargingScreen({ navigation }) {
       .then(data => {
         console.log(data)
         if (data.result == true) {
-          navigation.navigate('MyAccountScreen');
+          navigation.navigate('SearchScreen', { screen: 'MyAccountScreen' });
         } else {
           alert("outlet not found")
         }
