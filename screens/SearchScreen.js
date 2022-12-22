@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { Keyboard, Modal, StyleSheet, Text, TextInput, TouchableOpacity, View, Linking } from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
 import * as Location from 'expo-location';
@@ -7,6 +7,8 @@ import { registerOutlet } from '../reducers/outlet'
 import { useDispatch, useSelector } from 'react-redux';
 import * as geolib from 'geolib';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import { useFocusEffect } from '@react-navigation/native';
+import * as React from 'react';
 
 export default function SearchScreen({ navigation }) {
   const dispatch = useDispatch()
@@ -19,25 +21,28 @@ export default function SearchScreen({ navigation }) {
   const [importPlaces, setImportPlaces] = useState();
   const [selectedOutletID, setSelectedOutletID] = useState();
 
-  useEffect(() => {
+
+useFocusEffect(
+  React.useCallback(() => {
     (async () => {
       const { status } = await Location.requestForegroundPermissionsAsync();
 
       if (status === 'granted') {
         Location.watchPositionAsync({},
           (location) => {
-            setCurrentPosition({ ...location.coords, longitudeDelta: 0.05, latitudeDelta: 0.05 });
+            setCurrentPosition({...location.coords, longitudeDelta: 0.05, latitudeDelta: 0.05});
           });
       }
     })();
 
     fetch('https://voltify-backend.vercel.app//outlets/displayOutlet')
-      .then((response) => response.json())
-      .then((data) => {
-        data.result && setImportPlaces(data.data);
-      });
-  }, []);
+    .then((response) => response.json())
+    .then((data) => {
+      data.result && setImportPlaces(data.data)
+    })
+  },[]))
 
+ 
   //Search a specific address.
   const handleNewPlace = () => {
 
@@ -77,7 +82,10 @@ export default function SearchScreen({ navigation }) {
     averageVote = averageVote.toFixed(1);
     console.log(typeof averageVote);
 
-
+    handleStartCharging= () => {
+      setSelectedOutletID()
+      navigation.navigate('StartChargingScreen')
+    }
 
     infoCard =
       < View style={styles.infoCardView} >
@@ -107,7 +115,7 @@ export default function SearchScreen({ navigation }) {
             <Text style={styles.textButton}>Go there</Text>
           </TouchableOpacity>
 
-          <TouchableOpacity onPress={() => navigation.navigate('StartChargingScreen')} style={styles.buttonCard2} activeOpacity={0.8}>
+          <TouchableOpacity onPress={() => handleStartCharging()} style={styles.buttonCard2} activeOpacity={0.8}>
             <Text style={styles.textButton}>Start charging</Text>
           </TouchableOpacity>
         </View>
