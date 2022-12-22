@@ -2,6 +2,8 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import { LogBox } from "react-native";
+
 
 import DevScreen from './screens/DevScreen';
 import HomeScreen from './screens/HomeScreen';
@@ -23,6 +25,7 @@ import CheckoutScreen from './screens/CheckoutScreen';
 import { useFonts } from 'expo-font';
 
 
+LogBox.ignoreAllLogs(true)
 
 
 

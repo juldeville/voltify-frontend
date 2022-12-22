@@ -75,7 +75,9 @@ export default function SearchScreen({ navigation }) {
     distance = distance.toFixed(1);
     let averageVote = votes.reduce((a, b) => a + b, 0) / votes.length;
     averageVote = averageVote.toFixed(1);
-    console.log(averageVote);
+    console.log(typeof averageVote);
+
+
 
     infoCard =
       < View style={styles.infoCardView} >
@@ -96,7 +98,7 @@ export default function SearchScreen({ navigation }) {
           <View style={styles.infoCardSubDetails}>
             <Text style={styles.textCard}>{price}€/min</Text>
             <Text style={styles.textCard}><FontAwesome name="star" /> {averageVote}/5</Text>
-            
+
           </View>
         </View>
 

@@ -51,7 +51,7 @@ export default function SigninScreen({ navigation }) {
     return (
         <KeyboardAvoidingView style={styles.container} behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
 
-            <Text style={styles.title}>Sign in to your Voltify accout</Text>
+            <Text style={styles.title}>Sign in to your Voltify account</Text>
 
             <TextInput
                 placeholder="Email"
@@ -67,7 +67,7 @@ export default function SigninScreen({ navigation }) {
 
                     onChangeText={(value) => { console.log(value); setSignInPassword(value) }} value={signInPassword} style={styles.input} />
                 <Pressable onPress={() => handlePasswordVisibility()}>
-                    <FontAwesome style={{paddingTop: 15, position: 'absolute' }} name={rightIcon} size={22} color="#232323"/>
+                    <FontAwesome style={{ paddingTop: 15, position: 'absolute' }} name={rightIcon} size={22} color="#232323" />
                 </Pressable>
             </View>
 
