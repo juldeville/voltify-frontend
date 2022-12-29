@@ -1,15 +1,13 @@
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import MapView, { Marker } from 'react-native-maps'
-import * as Location from 'expo-location';
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 
-
-
 export default function MyOutletScreen({ navigation }) {
 
   const user = useSelector((state) => state.user.value);
+
   const [outletLatitude, setOutletLatitude] = useState()
   const [outletLongitude, setOutletLongitude] = useState()
   // Pour savoir si une prise a bien été trouvé
@@ -17,19 +15,14 @@ export default function MyOutletScreen({ navigation }) {
   const [address, setAddress] = useState(null);
   const [type, setType] = useState(null);
   const [price, setPrice] = useState(null);
-  const [averageVote, setAverageVote] = useState(null);
   const [outletVote, setOutletVote] = useState(null);
-  const [updatePage, setUpdatePage] = useState(null);
 
-
-  console.log('token is', user.token)
-
+  //displayUserOutlet/:token GET
   useEffect(() => {
     fetch(`https://voltify-backend.vercel.app/outlets/displayUserOutlet/${user.token}`)
       .then(response => response.json())
       .then(data => {
         if (data.result) {
-          console.log('UseEffect data', data)
           setOutletLatitude(data.outlet.latitude);
           setOutletLongitude(data.outlet.longitude);
           setAddress(data.outlet.address);
@@ -37,32 +30,18 @@ export default function MyOutletScreen({ navigation }) {
           setPrice(data.outlet.price)
           setValidOutlet(true);
           setOutletVote(data.outlet.votes)
-
-
         }
-
-
-
       });
   }, []);
-
-  console.log('VALUE OF OUTLETVOTE IS...', outletVote)
 
   let voteFinal;
   if (!outletVote === []) {
     voteFinal = outletVote.reduce((a, b) => a + b, 0) / outletVote.length;
     voteFinal = voteFinal.toFixed(1);
-
   }
-
   else {
-    console.log('No reviews yet')
     voteFinal = 'No reviews yet'
   }
-  console.log('Value of voteFinal...', voteFinal)
-
-
-  console.log('Value of validOutlet...', validOutlet)
 
   const currentPosition = {
     latitude: outletLatitude,
@@ -71,11 +50,9 @@ export default function MyOutletScreen({ navigation }) {
     longitudeDelta: 0.05,
   }
 
-
   if (!validOutlet) {
     return (<View style={styles.subContainer}>
       <Text>You currently have no outlet.</Text>
-
       <TouchableOpacity onPress={() => navigation.navigate('AddOutletScreen')} style={styles.button} activeOpacity={0.8}>
         <Text style={styles.textButton}>Add an outlet</Text>
       </TouchableOpacity>
@@ -83,16 +60,13 @@ export default function MyOutletScreen({ navigation }) {
   }
 
   const handleDelete = () => {
-    console.log("YOUR TOKEN IS", user.token)
     fetch(`https://voltify-backend.vercel.app/outlets/deleteOutlet`, {
       method: 'DELETE',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ token: user.token }),
     })
-
       .then(response => response.json())
       .then(data => {
-        console.log('DELETION CONFIRMED', data);
         setValidOutlet(false)
       });
   }
@@ -105,9 +79,7 @@ export default function MyOutletScreen({ navigation }) {
       <View style={styles.infoCardView}>
         <View style={styles.textWrap}>
           <View style={{ margin: 10, }}>
-
             <Text>{address}</Text>
-
           </View>
           <View style={styles.rightBox}>
             <Text><FontAwesome name="plug" /> {type}</Text>

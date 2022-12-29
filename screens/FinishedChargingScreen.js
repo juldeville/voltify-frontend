@@ -10,43 +10,29 @@ export default function FinishedChargingScreen({ navigation }) {
   const outlet = useSelector((state) => state.outlet.value);
   const transaction = useSelector((state) => state.transaction.value);
 
-
-  console.log("TRANSACTION ID IN FINISHED", transaction.id);
-  console.log("TRANSACTION DURATION IN FINISHED", transaction.duration);
-  console.log("OUTLET PRICE IS", outlet.price);
-
   let totalPrice = (outlet.price / 60) * transaction.duration;
   totalPrice = totalPrice.toFixed(2);
 
-  console.log('TOTAL Price is...', totalPrice);
-
-  // attente de outlet.id
-
   const [personalNote, setPersonalNote] = useState(0);
 
-
   const addVote = () => {
-    console.log("vote:", personalNote)
     fetch(`https://voltify-backend.vercel.app/outlets/addVote`, {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ id: outlet.id, vote: personalNote }),
     })
-
       .then(response => response.json())
       .then(data => {
-        console.log(data)
         if (data.result == true) {
           navigation.navigate('SearchScreen', { screen: 'MyAccountScreen' });
         } else {
           alert("outlet not found")
         }
-
       })
   }
 
-
   const personalStars = [];
+  
   for (let i = 0; i < 5; i++) {
     let style = { 'cursor': 'pointer', fontSize: 50 };
     if (i < personalNote) {
@@ -99,7 +85,6 @@ const styles = StyleSheet.create({
     marginBottom: 0,
   },
 
-
   textButton: {
     color: '#ffffff',
     height: 30,
@@ -110,19 +95,15 @@ const styles = StyleSheet.create({
   star: {
     flexDirection: 'row',
     paddingTop: 50,
-
-
   },
 
   textone: {
     fontSize: 20,
     paddingTop: 50,
-
   },
 
   texttow: {
     fontSize: 20,
     paddingTop: 50,
   }
-
 });

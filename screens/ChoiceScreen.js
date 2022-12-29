@@ -1,40 +1,23 @@
-
 import { StyleSheet, Text, TouchableOpacity, KeyboardAvoidingView} from 'react-native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-
-
 
 const Stack = createNativeStackNavigator();
 
 export default function ChoiceScreen({ navigation }) {
 
-
   return (
-
-
-
     <KeyboardAvoidingView style={styles.container} behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
-
       <Text style={styles.title}>What would you like to do?</Text>
-
       <TouchableOpacity onPress={() => navigation.navigate('SearchScreen')} style={styles.button} activeOpacity={0.8}>
         <Text style={styles.textButton}>Locate charging outlet</Text>
       </TouchableOpacity>
-
-
       <TouchableOpacity onPress={() => navigation.navigate('AddOutletScreen')} style={styles.button} activeOpacity={0.8}>
         <Text style={styles.textButton}>Offer a charging outlet</Text>
       </TouchableOpacity>
-
-
       <TouchableOpacity onPress={() => navigation.navigate('AddOutletScreen')} style={styles.button} activeOpacity={0.8}>
         <Text style={styles.textButton}>Do both</Text>
       </TouchableOpacity>
-
     </KeyboardAvoidingView>
-
-
-
   );
 }
 
@@ -45,7 +28,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
-
 
   title: {
     width: '80%',
@@ -69,7 +51,6 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     marginBottom: 0,
   },
-
 
   textButton: {
     color: '#ffffff',

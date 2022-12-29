@@ -10,7 +10,7 @@ import {
 
 export default function HomeScreen({ navigation }) {
 
-
+//Only for dev use
     return (
         <KeyboardAvoidingView style={styles.container} behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
 

@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { StyleSheet, Text, TextInput, TouchableOpacity, View, KeyboardAvoidingView, Modal, ScrollView } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
-import { signin, updateEmail } from "../reducers/user";
+import { updateEmail } from "../reducers/user";
 
 export default function SigninScreen({ navigation }) {
     const dispatch = useDispatch();
@@ -23,7 +23,6 @@ export default function SigninScreen({ navigation }) {
         setModalVisible(false)
     }
 
-
     useEffect(() => {
         fetch(`https://voltify-backend.vercel.app/users/viewUser/${user.token}`)
             .then(response => response.json())
@@ -35,9 +34,6 @@ export default function SigninScreen({ navigation }) {
             });
     }, []);
 
-    console.log('MYUSER', email);
-
-
     const handleUpdate = () => {
         fetch('https://voltify-backend.vercel.app/users/updateUser', {
             method: 'PUT',
@@ -47,7 +43,6 @@ export default function SigninScreen({ navigation }) {
             .then(data => {
                 if (data.result) {
                     dispatch(updateEmail({ email: data.email }));
-                    console.log('Great success!');
                     navigation.navigate('SearchScreen')
                 } else {
                     console.log('You fail!')
@@ -64,20 +59,14 @@ export default function SigninScreen({ navigation }) {
             .then(data => {
                 if (data.result) {
                     setModalVisible(false)
-                    console.log('password updated!')
                 } else {
                     console.log('data error', data.error)
                 }
             })
     }
 
-    console.log('USER INFO EMAIL...', userInfo.email)
-    console.log('MY EMAIL IS...', email);
-
-
     return (
         <KeyboardAvoidingView style={styles.container} behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
-
             <Text style={styles.title}>Account</Text>
             <Modal visible={modalVisible} animationType="fade" transparent stume>
                 <KeyboardAvoidingView style={styles.container1} behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
@@ -93,25 +82,20 @@ export default function SigninScreen({ navigation }) {
                             </TouchableOpacity>
                         </View>
                     </View>
-
                 </KeyboardAvoidingView>
             </Modal>
-
             <View style={styles.view}>
                 <TextInput
                     placeholder="Password"
                     secureTextEntry={true} editable={false} value='thisisafake' style={styles.inputWithButton} />
                 <TouchableOpacity title="Modify password" style={styles.buttonInput} onPress={() => handleModifyPassword()}><Text style={styles.modify}>Modify Password</Text></TouchableOpacity>
             </View>
-
             <TextInput
                 defaultValue={userInfo.email}
                 onChangeText={(value) => { console.log(value); setEmail(value) }} style={styles.inputEmail} keyboardType="email-address" autoCapitalize='none' textContentType='emailaddress' />
-
             <TextInput
                 defaultValue={userInfo.address}
                 onChangeText={(value) => { console.log(value); setAddress(value) }} style={styles.input} />
-
             <TextInput
                 placeholder="Your IBAN to receive payments"
                 onChangeText={(value) => { console.log(value); setIban(value) }} value={iban} style={styles.input} />
@@ -121,7 +105,6 @@ export default function SigninScreen({ navigation }) {
             <TouchableOpacity onPress={() => navigation.navigate('SearchScreen')} style={styles.buttonTwo} activeOpacity={0.8}>
                 <Text style={styles.textButton}>Back</Text>
             </TouchableOpacity>
-
         </KeyboardAvoidingView>
     )
 }
@@ -247,7 +230,6 @@ const styles = StyleSheet.create({
         marginTop: 20,
         marginBottom: 0,
     },
-
 
     buttonTwo: {
         alignItems: 'center',

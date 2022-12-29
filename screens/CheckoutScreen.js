@@ -1,28 +1,19 @@
-import { StyleSheet,
-        Text,
-        View,
-        TouchableOpacity,
-        KeyboardAvoidingView,
-        TextInput} from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity, KeyboardAvoidingView, TextInput} from 'react-native';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 
 export default function CheckoutScreen({navigation}) {
     return (
         <KeyboardAvoidingView style={styles.container} behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
-            
                 <Text style={styles.title}>Checkout</Text>
                 <Text style={styles.payment}>Payment Information  <FontAwesome  name={'credit-card'}></FontAwesome></Text>
                 <TextInput placeholder="Name on card" style={styles.input} />
                 <TextInput placeholder="Card Number" style={styles.input} />
                 <TextInput placeholder="Expiration Date" style={styles.input} keyboardType="email-address" autoCapitalize='none' textContentType='emailaddress' />
                 <TextInput placeholder="Cvv" style={styles.input} autoCorrect={false} autoCapitalize={'none'} />
-
             <TouchableOpacity onPress={() => navigation.navigate ("FinishedChargingScreen")} style={styles.button} activeOpacity={0.8}>
                 <Text style={styles.textButton}>Confirm Payment</Text>
             </TouchableOpacity>
-           
         </KeyboardAvoidingView>
-
     )
 }
 
@@ -33,7 +24,6 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'space-between',
     },
-
 
     title: {
         fontFamily: 'Roboto-Black',

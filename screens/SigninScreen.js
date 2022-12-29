@@ -6,7 +6,6 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome';
 
 export default function SigninScreen({ navigation }) {
     const dispatch = useDispatch();
-    const user = useSelector((state) => state.user.value);
 
     const [signInEmail, setSignInEmail] = useState('');
     const [signInPassword, setSignInPassword] = useState('');
@@ -23,6 +22,7 @@ export default function SigninScreen({ navigation }) {
         }
     }
 
+    //signin POST
     const handleConnection = () => {
         fetch('https://voltify-backend.vercel.app/users/signin', {
             method: 'POST',
@@ -36,23 +36,15 @@ export default function SigninScreen({ navigation }) {
                     setSignInPassword('');
                     console.log('Great succes!');
                     navigation.navigate('SearchScreen')
-
                 } else {
                     console.log('You fail!')
                 }
             });
     };
 
-
-
-
-
-
     return (
         <KeyboardAvoidingView style={styles.container} behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
-
             <Text style={styles.title}>Sign in to your Voltify account</Text>
-
             <TextInput
                 placeholder="Email"
                 autoCapitalize="none"
@@ -64,21 +56,17 @@ export default function SigninScreen({ navigation }) {
                     placeholder="Password"
                     autoCapitalize="none"
                     secureTextEntry={passwordVisibility}
-
                     onChangeText={(value) => { console.log(value); setSignInPassword(value) }} value={signInPassword} style={styles.input} />
                 <Pressable onPress={() => handlePasswordVisibility()}>
                     <FontAwesome style={{ paddingTop: 15, position: 'absolute' }} name={rightIcon} size={22} color="#232323" />
                 </Pressable>
             </View>
-
             <TouchableOpacity onPress={() => handleConnection()} style={styles.button} activeOpacity={0.8}>
                 <Text style={styles.textButton}>Sign in</Text>
             </TouchableOpacity>
-
             <TouchableOpacity onPress={() => navigation.navigate('HomeScreen')} style={styles.buttonTwo} activeOpacity={0.8}>
                 <Text style={styles.textButton}>Back</Text>
             </TouchableOpacity>
-
         </KeyboardAvoidingView>
     )
 }

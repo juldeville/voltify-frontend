@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
+import { StyleSheet, View, TouchableOpacity } from 'react-native';
 import { useEffect, useRef, useState } from 'react';
 import { Camera, CameraType, FlashMode } from 'expo-camera';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
@@ -46,13 +46,13 @@ export default function QrCodeScreen({ navigation }) {
       </View>
     </Camera >
   )
-
 }
 
 const styles = StyleSheet.create({
   camera: {
     flex: 1,
   },
+
   buttonsContainer: {
     flex: 0.1,
     flexDirection: 'row',
@@ -62,6 +62,7 @@ const styles = StyleSheet.create({
     paddingLeft: 20,
     paddingRight: 20,
   },
+
   button: {
     width: 44,
     height: 44,
@@ -70,6 +71,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(0, 0, 0, 0.2)',
     borderRadius: 50,
   },
+
   snapContainer: {
     flex: 1,
     alignItems: 'center',

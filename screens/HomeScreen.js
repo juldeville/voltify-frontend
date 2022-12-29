@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import {
     Image,
     KeyboardAvoidingView,
@@ -7,37 +6,22 @@ import {
     Text,
     TouchableOpacity,
 } from 'react-native';
-import AppLoader from './AppLoader';
-import { useLogin } from '../context/LoginProvider';
 
 export default function HomeScreen({ navigation }) {
-
-    /* const {loginPending} = useLogin() */
-
 
     return (
         <>
             <KeyboardAvoidingView style={styles.container} behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
-
                 <Text style={styles.title}>Welcome to</Text>
-
                 <Image style={styles.logo} source={require('../assets/voltify-logo.png')} />
-
                 <Image style={styles.image} source={require('../assets/home-background.png')} />
-
                 <TouchableOpacity onPress={() => navigation.navigate('SignupScreen')} style={styles.button} activeOpacity={0.8}>
                     <Text style={styles.textButton}>Sign up</Text>
                 </TouchableOpacity>
-
                 <TouchableOpacity onPress={() => navigation.navigate('SigninScreen')} style={styles.buttonTwo} activeOpacity={0.8}>
                     <Text style={styles.textButton}>Sign in</Text>
                 </TouchableOpacity>
-
-
-
             </KeyboardAvoidingView>
-
-            {/* <AppLoader /> */}
         </>
 
 

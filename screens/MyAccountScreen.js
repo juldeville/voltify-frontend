@@ -1,30 +1,17 @@
 import { useState, useEffect } from 'react';
-import { StyleSheet, Text, TextInput, TouchableOpacity, View, KeyboardAvoidingView, Image } from 'react-native';
-import { useDispatch, useSelector } from 'react-redux';
-import { signin } from "../reducers/user";
+import { StyleSheet, Text, TouchableOpacity, View, KeyboardAvoidingView, } from 'react-native';
+import { useSelector } from 'react-redux';
 import * as React from 'react';
 
 
 
 export default function MyAccountScreen({ navigation }) {
-    const dispatch = useDispatch();
     const user = useSelector((state) => state.user.value);
-
-    const [signInEmail, setSignInEmail] = useState('');
-    const [signInPassword, setSignInPassword] = useState('');
 
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
 
-
-    /*const handleName = () => {
-        fetch('https://voltify-backend.vercel.app/users',)
-        .then(response => response.json())
-        .then(data => {
-        setName(data.FirstName);
-        })
-    }*/
-
+    //viewUser GET
     useEffect(() => {
         fetch(`https://voltify-backend.vercel.app/users/viewUser/${user.token}`)
             .then(response => response.json())
@@ -34,46 +21,34 @@ export default function MyAccountScreen({ navigation }) {
             });
     }, []);
 
+    //deleteUser DELETE
     const handleDelete = () => {
         fetch(`https://voltify-backend.vercel.app/users/deleteUser`, {
             method: 'DELETE',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ token: user.token }),
         })
-
             .then(response => response.json())
             .then(data => {
                 navigation.navigate('HomeScreen');
             });
     }
 
-
-
-
-
     return (
         <KeyboardAvoidingView style={styles.container} behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
-
             <Text style={styles.title}>MY PROFILE</Text>
-
             <View>
                 <Text style={styles.name}>{firstName}</Text>
                 <Text style={styles.name}>{lastName}</Text>
             </View>
-
-
             <View style={styles.buttons}>
-
                 <TouchableOpacity onPress={() => navigation.navigate('UpdateAccountScreen')} style={styles.button} activeOpacity={0.8}>
                     <Text style={styles.textButton}>Modify</Text>
                 </TouchableOpacity>
-
                 <TouchableOpacity onPress={() => handleDelete()} style={styles.buttonTwo} activeOpacity={0.8}>
                     <Text style={styles.textButton}>DeleteAccount</Text>
                 </TouchableOpacity>
             </View>
-
-
         </KeyboardAvoidingView>
     )
 }
@@ -93,8 +68,6 @@ const styles = StyleSheet.create({
         marginTop: -20,
         textAlign: 'center',
         fontFamily: 'Roboto-Black'
-
-
     },
 
     buttons: {
@@ -104,33 +77,20 @@ const styles = StyleSheet.create({
     },
 
     avatar: {
-
-        //   marginBottom:50,
         width: 120,
         height: 120,
         marginTop: 30,
-
-
     },
 
     name: {
-        // width: '20%',
         fontSize: 25,
-        // fontWeight: '600',
-        // paddingBottom:150,
         textAlign: 'center',
         marginBottom: 20,
-
-
     },
 
     total: {
-        // width: '20%',
         fontSize: 25,
-        // fontWeight: '600',
-        // paddingBottom:150,
         textAlign: 'center',
-
     },
 
     input: {
@@ -149,7 +109,6 @@ const styles = StyleSheet.create({
         backgroundColor: '#EEA61B',
         borderRadius: 10,
         marginTop: 120,
-
     },
 
     buttonTwo: {
@@ -160,7 +119,6 @@ const styles = StyleSheet.create({
         backgroundColor: '#EE1B42',
         borderRadius: 10,
         marginBottom: 28,
-
     },
 
     textButton: {
@@ -169,5 +127,4 @@ const styles = StyleSheet.create({
         fontWeight: '600',
         fontSize: 16,
     },
-
 });

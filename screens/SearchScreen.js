@@ -1,10 +1,9 @@
-import { useCallback, useEffect, useState } from 'react';
-import { Keyboard, Modal, StyleSheet, Text, TextInput, TouchableOpacity, View, Linking } from 'react-native';
+import {  useState } from 'react';
+import { StyleSheet, Text, TextInput, TouchableOpacity, View, Linking } from 'react-native';
 import MapView, { Marker } from 'react-native-maps';
 import * as Location from 'expo-location';
-import { current } from '@reduxjs/toolkit';
 import { registerOutlet } from '../reducers/outlet'
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, } from 'react-redux';
 import * as geolib from 'geolib';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import { useFocusEffect } from '@react-navigation/native';
@@ -12,11 +11,9 @@ import * as React from 'react';
 
 export default function SearchScreen({ navigation }) {
   const dispatch = useDispatch()
-  const outlet = useSelector((state) => state.outlet.value);
-
+  
   const [currentPosition, setCurrentPosition] = useState(null);
   const [searchedPlace, setSearchedPlace] = useState(null);
-  const [modalVisible, setModalVisible] = useState(true);
   const [newPlace, setNewPlace] = useState('');
   const [importPlaces, setImportPlaces] = useState();
   const [selectedOutletID, setSelectedOutletID] = useState();
@@ -58,7 +55,6 @@ useFocusEffect(
         const updatedOutletLatitude = data.features[0].geometry.coordinates[1];
 
         setSearchedPlace({ latitude: updatedOutletLatitude, longitude: updatedOutletLongitude, latitudeDelta: 0.05, longitudeDelta: 0.05 })
-
       })
   };
 
@@ -80,8 +76,7 @@ useFocusEffect(
     distance = distance.toFixed(1);
     let averageVote = votes.reduce((a, b) => a + b, 0) / votes.length;
     averageVote = averageVote.toFixed(1);
-    console.log(typeof averageVote);
-
+   
     handleStartCharging= () => {
       setSelectedOutletID()
       navigation.navigate('StartChargingScreen')
@@ -89,41 +84,31 @@ useFocusEffect(
 
     infoCard =
       < View style={styles.infoCardView} >
-
         <View style={styles.infoCardSub1}>
           <Text style={styles.textCard}>{distance} km from here</Text>
-
           <View style={styles.outletType}>
             <FontAwesome name="plug" />
             <Text style={{ fontWeight: "600", fontSize: 15, color: 'black' }}> {type}</Text>
             <FontAwesome name='times-circle' color='black' style={{ fontSize: 20, marginLeft: 20 }} onPress={() => setSelectedOutletID()} />
           </View>
-
         </View>
-
         <View style={styles.infoCardSub2}>
           <Text style={styles.textCardAddress}>{address}</Text>
           <View style={styles.infoCardSubDetails}>
             <Text style={styles.textCard}>{price}€/min</Text>
             <Text style={styles.textCard}><FontAwesome name="star" /> {averageVote}/5</Text>
-
           </View>
         </View>
-
         <View style={styles.infoCardSub3}>
           <TouchableOpacity onPress={() => Linking.openURL(url)} style={styles.buttonCard} activeOpacity={0.8}>
             <Text style={styles.textButton}>Go there</Text>
           </TouchableOpacity>
-
           <TouchableOpacity onPress={() => handleStartCharging()} style={styles.buttonCard2} activeOpacity={0.8}>
             <Text style={styles.textButton}>Start charging</Text>
           </TouchableOpacity>
         </View>
-
       </View >
-
     setSelectedOutletID(infoCard);
-
   };
 
   //Display Markers
@@ -136,7 +121,6 @@ useFocusEffect(
 
   return (
     <View style={styles.container}>
-
       <View style={styles.modalView}>
         <TextInput placeholder="Search a specific address" onChangeText={(value) => { console.log(value); setNewPlace(value) }} value={newPlace} style={styles.input} />
         <TouchableOpacity onPress={() => handleNewPlace()} style={styles.button} activeOpacity={0.8}>
@@ -144,7 +128,7 @@ useFocusEffect(
         </TouchableOpacity>
       </View>
       {selectedOutletID}
-      <MapView style={styles.map} region={searchedPlace ? searchedPlace : currentPosition} /* onPress={() => { Keyboard.dismiss(), setSelectedOutletID() }} */>
+      <MapView style={styles.map} region={searchedPlace ? searchedPlace : currentPosition} >
         {currentPosition && <Marker coordinate={currentPosition} title="My position" pinColor="black" />}
         {markers}
       </MapView>

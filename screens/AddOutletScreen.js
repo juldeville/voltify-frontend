@@ -3,8 +3,6 @@ import { StyleSheet, Text, TextInput, TouchableOpacity, View, KeyboardAvoidingVi
 import { useSelector } from 'react-redux';
 import { SelectList } from 'react-native-dropdown-select-list';
 
-
-
 export default function AddOutletScreen({ navigation }) {
 
     //Start of WeekDayPicker
@@ -21,25 +19,18 @@ export default function AddOutletScreen({ navigation }) {
     const [outletType, setOutletType] = useState('');
     const [outletPrice, setOutletPrice] = useState('');
 
-
     const handleAddOutlet = () => {
-
 
         const search = ' ';
         const replaceWith = '+';
         let formatedAddress = outletAddress.split(search).join(replaceWith);
-
+        //fetch API
         fetch(`https://api-adresse.data.gouv.fr/search/?q=${formatedAddress}`)
             .then((response) => response.json())
             .then((data) => {
                 // Reatribute the data LONG and LAT to new consts because the LONG and LAT states are only updated when component re-renders
                 const updatedOutletLongitude = data.features[0].geometry.coordinates[0];
                 const updatedOutletLatitude = data.features[0].geometry.coordinates[1];
-
-                console.log('Test Longitude', updatedOutletLongitude);
-                console.log('Test Latitude', updatedOutletLatitude);
-                console.log('Test Outlet', outletType);
-
 
                 fetch('https://voltify-backend.vercel.app/outlets/addOutlet', {
                     method: 'POST',
@@ -57,25 +48,18 @@ export default function AddOutletScreen({ navigation }) {
                         if (data.result) {
                             console.log('Great succes!');
                             navigation.navigate('SearchScreen', { screen: 'Search' });
-
-
                         } else {
                             console.log('You fail!')
                         }
                     });
-
             })
     };
-
 
     return (
 
         <KeyboardAvoidingView style={styles.container} behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
-
             <View style={styles.boxView}>
-
                 <Text style={styles.title}>Add your outlet</Text>
-
                 <SelectList
                     style={styles.inputBox}
                     placeholder="Select your outlet type"
@@ -83,36 +67,36 @@ export default function AddOutletScreen({ navigation }) {
                     data={data}
                     save="value"
                 />
-
                 <TextInput
                     placeholder="Address"
                     autoCapitalize="none"
-                    onChangeText={(value) => { setOutletAddress(value) }} value={outletAddress} style={styles.input} />
-
+                    onChangeText={(value) => { setOutletAddress(value) }} 
+                    value={outletAddress} 
+                    style={styles.input} 
+                 />
                 <TextInput
                     placeholder="Price"
                     autoCapitalize="none"
-                    onChangeText={(value) => { setOutletPrice(value) }} value={outletPrice} style={styles.input} />
+                    onChangeText={(value) => { setOutletPrice(value) }} 
+                    value={outletPrice} 
+                    style={styles.input} 
+                 />
 
                 <View style={styles.buttons}>
-
-                    <TouchableOpacity onPress={() => handleAddOutlet()} style={styles.button} activeOpacity={0.8}>
+                    <TouchableOpacity 
+                    onPress={() => handleAddOutlet()} 
+                    style={styles.button} 
+                    activeOpacity={0.8}>
                         <Text style={styles.textButton}>Add</Text>
                     </TouchableOpacity>
-
-
-                    <TouchableOpacity onPress={() => navigation.navigate('SearchScreen', { screen: 'MyAccountScreen' })} style={styles.buttonTwo} activeOpacity={0.8}>
+                    <TouchableOpacity 
+                    onPress={() => navigation.navigate('SearchScreen', { screen: 'MyAccountScreen' })} 
+                    style={styles.buttonTwo} 
+                    activeOpacity={0.8}>
                         <Text style={styles.textButton}>Back</Text>
                     </TouchableOpacity>
-
                 </View>
-
-
-
             </View>
-
-
-
         </KeyboardAvoidingView>
     )
 }
@@ -129,7 +113,6 @@ const styles = StyleSheet.create({
         height: '100%',
         justifyContent: 'space-between',
     },
-
 
     image: {
         width: '100%',
@@ -150,7 +133,6 @@ const styles = StyleSheet.create({
         textAlign: 'center',
     },
 
-
     input: {
         width: '100%',
         marginTop: 55,
@@ -159,7 +141,6 @@ const styles = StyleSheet.create({
         fontSize: 18,
         marginBottom: 25,
     },
-
 
     button: {
         alignItems: 'center',

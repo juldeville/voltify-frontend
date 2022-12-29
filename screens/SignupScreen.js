@@ -1,20 +1,8 @@
 import { useState } from 'react';
 import { useDispatch, } from 'react-redux';
-import {
-    View,
-    Image,
-    KeyboardAvoidingView,
-    Platform,
-    StyleSheet,
-    Text,
-    TouchableOpacity,
-    TextInput,
-    ScrollView,
-    Pressable,
-} from 'react-native';
+import { View, KeyboardAvoidingView, Platform, StyleSheet, Text, TouchableOpacity, TextInput, ScrollView, Pressable, } from 'react-native';
 import { signin } from '../reducers/user'
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
-
 
 export default function HomeScreen({ navigation }) {
     const dispatch = useDispatch()
@@ -37,9 +25,8 @@ export default function HomeScreen({ navigation }) {
             setPasswordVisibility(!passwordVisibility);
         }
     }
-
+    //EMAIL REGEX for signup
     const EMAIL_REGEX = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-
 
     const handleSignUp = () => {
         if (EMAIL_REGEX.test(email)) {
@@ -57,14 +44,12 @@ export default function HomeScreen({ navigation }) {
                         setEmail('');
                         setPassword('')
                         setAddress('')
-    
                         navigation.navigate('ChoiceScreen')
                     }
                 })
         } else {
             setEmailError(true)
         }
-
     }
 
     return (
@@ -101,7 +86,6 @@ const styles = StyleSheet.create({
     scrollView: {
         width: '85%',
     },
-
 
     title: {
         width: '80%',
@@ -141,7 +125,6 @@ const styles = StyleSheet.create({
 
     searchSection: {
         flexDirection: 'row',
-     
-
+    
     }
 });

@@ -13,8 +13,6 @@ export default function ChargingScreen({ navigation }) {
   const outlet = useSelector((state) => state.outlet.value);
   const user = useSelector((state) => state.user.value);
 
-
-
   const [isTimerStart, setIsTimerStart] = useState(false);
   const [isStopwatchStart, setIsStopwatchStart] = useState(false);
   const [timerDuration, setTimerDuration] = useState(90000);
@@ -22,14 +20,8 @@ export default function ChargingScreen({ navigation }) {
   const [resetStopwatch, setResetStopwatch] = useState(false);
   const [finalTime, setFinalTime] = useState(0);
 
-
-  console.log('USER TOKEN IS...', user.token);
-  console.log('FINAL TIME IS...', finalTime);
-  console.log('OUTLET ID IS...', outlet.id);
-  console.log('OUTLET PRICE IS...', outlet.price);
-
   const handlePress = () => {
-
+    //fetch POST addTransaction
     fetch('https://voltify-backend.vercel.app/transactions/addTransaction/', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -45,28 +37,17 @@ export default function ChargingScreen({ navigation }) {
         if (data.result) {
           dispatch(registerTransaction({ id: data.transactionData._id }));
           dispatch(registerTransaction({ duration: data.transactionData.duration }));
-
-
-
         } else {
           console.log('You fail!')
         }
       });
   }
 
-
-
-
-
   return (
     <SafeAreaView style={styles.container}>
-
       <Text style={styles.title}>Start charging now</Text>
       <Text style={styles.text}>You have been chargin for:</Text>
-
-
       <View style={styles.watch}>
-
         <Stopwatch
           laps
           msecs
@@ -76,7 +57,6 @@ export default function ChargingScreen({ navigation }) {
             setFinalTime(time / 1000);
           }}
         />
-
         <TouchableHighlight
           style={styles.button}
           onPress={() => {
@@ -88,14 +68,12 @@ export default function ChargingScreen({ navigation }) {
             {!isStopwatchStart ? 'START' : 'STOP'}
           </Text>
         </TouchableHighlight>
-
       </View>
-
-
-      <TouchableOpacity onPress={() => { navigation.navigate('CheckoutScreen'); handlePress() }} style={styles.buttonTwo} activeOpacity={0.8}>
+      <TouchableOpacity onPress={() => { navigation.navigate('CheckoutScreen'); handlePress() }} 
+      style={styles.buttonTwo} 
+      activeOpacity={0.8}>
         <Text style={styles.textButton}>Checkout</Text>
       </TouchableOpacity>
-
     </SafeAreaView>
   );
 }
@@ -157,14 +135,10 @@ const styles = StyleSheet.create({
     marginTop: 50,
   },
 
-
-
-
   textButton: {
     color: '#ffffff',
     fontWeight: '600',
     fontSize: 16,
 
   },
-
 });

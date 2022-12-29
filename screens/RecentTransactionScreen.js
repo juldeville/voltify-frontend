@@ -1,6 +1,6 @@
-import { useState, useEffect } from 'react';
-import { StyleSheet, Text, TextInput, TouchableOpacity, View, KeyboardAvoidingView, Image } from 'react-native';
-import { useDispatch, useSelector } from 'react-redux';
+import { useState,  } from 'react';
+import { StyleSheet, Text, View, } from 'react-native';
+import { useSelector } from 'react-redux';
 import * as React from 'react';
 import { useFocusEffect } from '@react-navigation/native';
 
@@ -15,18 +15,18 @@ useFocusEffect(
     fetch (`https://voltify-backend.vercel.app/transactions/addTransaction/${user.token}`)
     .then(response => response.json())
     .then(data => {
-      console.log('azefazefazefazef', data.outlet)
       setUserData(data.outlet)
     })
   },[]))
 
 const transactions = userData.map((data, i) => {
+//date formatting
 const dateObj = new Date(data.date)
 const withoutTime = data.date.split('T')
 const hour = dateObj.getUTCHours()
 const minute = dateObj.getUTCMinutes()
 const minutes = Math.ceil(data.duration/60)
-console.log(hour, minute)
+
   return (
     <View key = {i} style={styles.infoCard}>
       <View >
@@ -40,7 +40,6 @@ console.log(hour, minute)
     </View>
   )
 })
-
 
  return (
    <View style={styles.container}>
@@ -75,7 +74,5 @@ const styles = StyleSheet.create({
   paddingBottom: 50,
   textAlign: 'center',
   fontFamily: 'Roboto-Black'
- 
-
 },
 });

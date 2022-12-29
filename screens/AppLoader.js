@@ -1,7 +1,8 @@
 import { createPermissionHook } from 'expo-modules-core';
 import { StyleSheet, Text, View } from 'react-native';
-
 import AnimatedLottieView from 'lottie-react-native';
+
+//Loading screen work in progress
 
 const AppLoader = () => {
     return(
