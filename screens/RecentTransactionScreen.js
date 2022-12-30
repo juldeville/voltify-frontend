@@ -30,12 +30,12 @@ const minutes = Math.ceil(data.duration/60)
   return (
     <View key = {i} style={styles.infoCard}>
       <View >
-      <Text><Text style={{fontWeight:"600"}}>Date: </Text>{withoutTime[0]}</Text>
-      <Text><Text style={{fontWeight:"600"}}>Time: </Text>{hour} : {minute}</Text>
-      <Text><Text style={{fontWeight:"600"}}>Duration: </Text>{minutes}</Text>
+        <Text><Text style={{fontWeight:"600"}}>Date: </Text>{withoutTime[0]}</Text>
+        <Text><Text style={{fontWeight:"600"}}>Time: </Text>{hour} : {minute}</Text>
+        <Text><Text style={{fontWeight:"600"}}>Duration: </Text>{minutes}</Text>
       </View>
       <View>
-      <Text>${data.price}</Text>
+        <Text>${data.price}</Text>
       </View>
     </View>
   )
